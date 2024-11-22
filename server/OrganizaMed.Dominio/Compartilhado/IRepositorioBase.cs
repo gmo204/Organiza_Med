@@ -6,9 +6,9 @@
         void Editar(TEntidade registro);
         void Excluir(TEntidade registro);
 
-        TEntidade SelecionarPorId(Guid id);
+        TEntidade? SelecionarPorId(Guid id);
 
-        Task<TEntidade> SelecionarPorIdAsync(Guid id);
+        Task<TEntidade?> SelecionarPorIdAsync(Guid id);
         Task<List<TEntidade>> SelecionarTodosAsync();
     }
 }

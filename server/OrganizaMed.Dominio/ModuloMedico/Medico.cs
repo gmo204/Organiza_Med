@@ -1,4 +1,5 @@
 ﻿using OrganizaMed.Dominio.Compartilhado;
+using OrganizaMed.Dominio.ModuloAtividade;
 
 namespace OrganizaMed.Dominio.ModuloMedico
 {
@@ -7,6 +8,8 @@ namespace OrganizaMed.Dominio.ModuloMedico
         public string Nome { get; set; }
         public string CRM { get; set; }
         public bool Ocupado { get; set; }
+
+        public List<Atividade> Atividades { get; set; }
         
         protected Medico() { }
 

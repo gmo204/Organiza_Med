@@ -4,7 +4,7 @@ using OrganizaMed.Dominio.ModuloAtividade;
 
 namespace OrganizaMed.InfraOrm.ModuloAtividade
 {
-    public class MapeadorAtividade : IEntityTypeConfiguration<Atividade>
+    public class MapeadorAtividadeOrm : IEntityTypeConfiguration<Atividade>
     {
         public void Configure(EntityTypeBuilder<Atividade> builder)
         {
@@ -18,18 +18,22 @@ namespace OrganizaMed.InfraOrm.ModuloAtividade
                 .HasColumnType("int");
 
             builder.Property(x => x.HoraInicio)
+                .HasColumnType("datetime2")
                 .IsRequired();
 
             builder.Property(x => x.HoraFim)
+                .HasColumnType("datetime2")
                 .IsRequired();
 
-            builder.HasMany(x => x.Medicos);
+            builder.HasMany(x => x.Medicos)
+                .WithMany(m => m.Atividades)
+                .UsingEntity(t => t.ToTable("TBAtividade_TBMedico"));
 
-            //builder.HasOne(x => x.Usuario)
-            //    .WithMany()
-            //    .IsRequired()
-            //    .HasForeignKey(x => x.UsuarioId)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Usuario)
+                .WithMany()
+                .IsRequired()
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

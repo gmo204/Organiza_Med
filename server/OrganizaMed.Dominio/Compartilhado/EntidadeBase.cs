@@ -1,4 +1,6 @@
-﻿namespace OrganizaMed.Dominio.Compartilhado
+﻿using OrganizaMed.Dominio.ModuloAutenticacao;
+
+namespace OrganizaMed.Dominio.Compartilhado
 {
     public class EntidadeBase
     {
@@ -10,7 +12,7 @@
             Id = new Guid();
         }
 
-        //public Guid UsuarioId { get; set; }
-        //public Usuario? Usuario { get; set; }
+        public Guid UsuarioId { get; set; }
+        public Usuario? Usuario { get; set; }
     }
 }

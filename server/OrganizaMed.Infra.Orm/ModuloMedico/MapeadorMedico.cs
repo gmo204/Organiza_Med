@@ -17,18 +17,18 @@ namespace OrganizaMed.Infra.Orm.ModuloMedico
                 .IsRequired();
 
             builder.Property(x => x.CRM)
-                .HasColumnType("varchar(8)")
+                .HasColumnType("char(8)")
                 .IsRequired();
 
             builder.Property(x => x.Ocupado)
                 .HasColumnType("bit")
                 .IsRequired();
 
-            //builder.HasOne(x => x.Usuario)
-            //    .WithMany()
-            //    .IsRequired()
-            //    .HasForeignKey(x => x.UsuarioId)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.Usuario)
+                .WithMany()
+                .IsRequired()
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

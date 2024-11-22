@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Apresentacao", "1 - Apr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Distribuicao", "2 - Distribuicao", "{2DE5014D-01E0-4F19-B36D-3DE022599880}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.InfraOrm", "OrganizaMed.InfraOrm\OrganizaMed.InfraOrm.csproj", "{681A99AA-A26B-4DAF-A9D0-3CE215BE5011}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.Dominio", "OrganizaMed.Dominio\OrganizaMed.Dominio.csproj", "{8DD38C81-57C1-4781-AB73-828947414B1D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.Aplicacao", "OrganizaMed.Aplicacao\OrganizaMed.Aplicacao.csproj", "{63176B08-BAF8-47D8-A851-E46CA73F8D75}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.WebApi", "OrganizaMed.WebApi\OrganizaMed.WebApi.csproj", "{7DC696A9-AB53-4D3F-9985-DCE100E9ED58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizaMed.Infra.Orm", "OrganizaMed.Infra.Orm\OrganizaMed.Infra.Orm.csproj", "{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{6AD841FB-7DE6-4FF7-8D21-08F95E004396}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AD841FB-7DE6-4FF7-8D21-08F95E004396}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AD841FB-7DE6-4FF7-8D21-08F95E004396}.Release|Any CPU.Build.0 = Release|Any CPU
-		{681A99AA-A26B-4DAF-A9D0-3CE215BE5011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{681A99AA-A26B-4DAF-A9D0-3CE215BE5011}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{681A99AA-A26B-4DAF-A9D0-3CE215BE5011}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{681A99AA-A26B-4DAF-A9D0-3CE215BE5011}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DD38C81-57C1-4781-AB73-828947414B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DD38C81-57C1-4781-AB73-828947414B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD38C81-57C1-4781-AB73-828947414B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,16 +45,20 @@ Global
 		{7DC696A9-AB53-4D3F-9985-DCE100E9ED58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DC696A9-AB53-4D3F-9985-DCE100E9ED58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DC696A9-AB53-4D3F-9985-DCE100E9ED58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6AD841FB-7DE6-4FF7-8D21-08F95E004396} = {B67734DA-B971-41D6-90BA-074C29D5B089}
-		{681A99AA-A26B-4DAF-A9D0-3CE215BE5011} = {861DAA06-C69C-4317-9E3D-BBAD35FB7087}
 		{8DD38C81-57C1-4781-AB73-828947414B1D} = {DD6A16A2-2AAD-45CB-BBB6-591E40494CF3}
 		{63176B08-BAF8-47D8-A851-E46CA73F8D75} = {DE26885A-D049-4BD2-984C-D6447CBC1F8B}
 		{7DC696A9-AB53-4D3F-9985-DCE100E9ED58} = {2DE5014D-01E0-4F19-B36D-3DE022599880}
+		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4} = {861DAA06-C69C-4317-9E3D-BBAD35FB7087}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E87A050C-6E47-47FA-820E-F10922310F18}

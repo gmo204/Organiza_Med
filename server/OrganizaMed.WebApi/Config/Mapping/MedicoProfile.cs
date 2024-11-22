@@ -8,9 +8,10 @@ namespace OrganizaMed.WebApi.Config.Mappiing
     {
         public MedicoProfile()
         {
+            CreateMap<Medico, ListarMedicoViewModel>();
+
             CreateMap<InserirMedicoViewModel, Medico>();
             CreateMap<EditarMedicoViewModel, Medico>();
-            CreateMap<ListarMedicoViewModel, Medico>();
         }
     }
 }

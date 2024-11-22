@@ -31,7 +31,7 @@ namespace OrganizaMed.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inserir(InserirMedicoViewModel medicoVm)
+        public async Task<IActionResult> Post(InserirMedicoViewModel medicoVm)
         {
             var medico = mapeador.Map<Medico>(medicoVm);
 
@@ -42,5 +42,5 @@ namespace OrganizaMed.WebApi.Controllers
 
             return Ok(medicoVm);
         }
-    } 
+    }
 }

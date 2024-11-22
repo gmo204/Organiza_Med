@@ -11,7 +11,7 @@ namespace OrganizaMed.InfraOrm.ModuloAtividade
         {
         }
 
-        public async Task<Atividade> SelecionarPorIdAsync(Guid id)
+        public async Task<Atividade?> SelecionarPorIdAsync(Guid id)
         {
             return await registros.Include(x => x.Medicos).SingleOrDefaultAsync(x => x.Id == id);
         }
