@@ -6,7 +6,7 @@ using OrganizaMed.WebApi.ViewModels;
 
 namespace OrganizaMed.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/medicos")]
     [ApiController]
     public class MedicoController : ControllerBase
     {
@@ -27,7 +27,22 @@ namespace OrganizaMed.WebApi.Controllers
             if(resultado.IsFailed)
                 return StatusCode(500);
 
-            return Ok(resultado.Value);
+            var medicoVm = mapeador.Map<ListarMedicoViewModel[]>(resultado.Value);
+
+            return Ok(medicoVm);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var medicoResult = await servicoMedico.SelecionarPorIdAsync(id);
+
+            if (medicoResult.IsFailed)
+                return NotFound(medicoResult.Errors);
+
+            var medicoVm = mapeador.Map<VisualizarMedicoViewModel>(medicoResult.Value);
+
+            return Ok(medicoVm);
         }
 
         [HttpPost]
@@ -41,6 +56,35 @@ namespace OrganizaMed.WebApi.Controllers
                 return BadRequest(resultado.Errors);
 
             return Ok(medicoVm);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, EditarMedicoViewModel medicoVm)
+        {
+            var selecionarOriginal = await servicoMedico.SelecionarPorIdAsync(id);
+
+            if (selecionarOriginal.IsFailed)
+                return NotFound(selecionarOriginal.Errors);
+
+            var medicoEditado = mapeador.Map(medicoVm, selecionarOriginal.Value);
+
+            var edicao = await servicoMedico.EditarAsync(medicoEditado);
+            
+            if (edicao.IsFailed)
+                return BadRequest(edicao.Errors);
+
+            return Ok(edicao.Value);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var Result = await servicoMedico.ExcluirAsync(id);
+
+            if (Result.IsFailed)
+                return NotFound(Result.Errors);
+
+            return Ok();
         }
     }
 }
