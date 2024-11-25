@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using OrganizaMed.Aplicacao.Medico;
 using OrganizaMed.Dominio.ModuloMedico;
@@ -20,14 +21,20 @@ namespace OrganizaMed.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(bool? ocupado)
         {
-            var resultado = await servicoMedico.SelecionarTodosAsync();
+            Result<List<Medico>> medicoResult;
 
-            if(resultado.IsFailed)
+            if (ocupado.HasValue)
+                medicoResult = await servicoMedico.Filtrar(m => m.Ocupado == ocupado);
+            
+            else 
+                medicoResult = await servicoMedico.SelecionarTodosAsync();
+
+            if(medicoResult.IsFailed)
                 return StatusCode(500);
 
-            var medicoVm = mapeador.Map<ListarMedicoViewModel[]>(resultado.Value);
+            var medicoVm = mapeador.Map<ListarMedicoViewModel[]>(medicoResult.Value);
 
             return Ok(medicoVm);
         }
@@ -53,7 +60,7 @@ namespace OrganizaMed.WebApi.Controllers
             var resultado = await servicoMedico.InserirAsync(medico);
 
             if (resultado.IsFailed)
-                return BadRequest(resultado.Errors);
+                return BadRequest(resultado.Errors.Select(err => err.Message));
 
             return Ok(medicoVm);
         }
@@ -71,7 +78,7 @@ namespace OrganizaMed.WebApi.Controllers
             var edicao = await servicoMedico.EditarAsync(medicoEditado);
             
             if (edicao.IsFailed)
-                return BadRequest(edicao.Errors);
+                return BadRequest(edicao.Errors.Select(err => err.Message));
 
             return Ok(edicao.Value);
         }
@@ -82,7 +89,7 @@ namespace OrganizaMed.WebApi.Controllers
             var Result = await servicoMedico.ExcluirAsync(id);
 
             if (Result.IsFailed)
-                return NotFound(Result.Errors);
+                return NotFound(Result.Errors.Select(err => err.Message));
 
             return Ok();
         }

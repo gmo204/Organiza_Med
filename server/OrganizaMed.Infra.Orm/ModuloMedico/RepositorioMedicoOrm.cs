@@ -20,5 +20,12 @@ namespace OrganizaMed.InfraOrm.ModuloMedico
         {
             return await registros.ToListAsync();
         }
+
+        public async Task<List<Medico>> Filtrar(Func<Medico, bool> predicate)
+        {
+            var medicos = await registros.Include(x => x.Atividades).ToListAsync();
+
+            return medicos.Where(predicate).ToList();
+        }
     }
 }

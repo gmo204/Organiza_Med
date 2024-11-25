@@ -73,5 +73,21 @@ namespace OrganizaMed.Aplicacao.Medico
 
             return Result.Ok(medico);
         }
+
+        public async Task<Result<List<Dominio.ModuloMedico.Medico>>> Filtrar(Func<Dominio.ModuloMedico.Medico, bool> predicate)
+        {
+            var notas = await repositorioMedico.Filtrar(predicate);
+            
+            return Result.Ok(notas);
+        }
+
+        public Result<Dominio.ModuloMedico.Medico> AlterarStatus(Dominio.ModuloMedico.Medico medico)
+        {
+            medico.Ocupado = !medico.Ocupado;
+
+            repositorioMedico.Editar(medico);
+
+            return Result.Ok(medico);
+        }
     }
 }
