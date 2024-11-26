@@ -60,9 +60,11 @@ namespace OrganizaMed.WebApi
 
             builder.Services.AddSwaggerGen();
 
+            builder.Services.ConfigureSerilog(builder.Logging);
+
             var app = builder.Build();
 
-            //app.UseGlobalExceptionHandler();
+            app.UseGlobalExceptionHandler();
 
             app.UseSwagger();
             app.UseSwaggerUI();

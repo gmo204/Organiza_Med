@@ -3,30 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using OrganizaMed.Aplicacao.Medico;
 using OrganizaMed.Dominio.ModuloAtividade;
 using OrganizaMed.WebApi.ViewModels;
+using Serilog;
 
 namespace OrganizaMed.WebApi.Controllers
 {
     [Route("api/atividades")]
     [ApiController]
-    public class AtividadeController : ControllerBase
+    public class AtividadeController(ServicoAtividade servicoAtividade, IMapper mapeador) : ControllerBase
     {
-        private readonly IMapper mapeador;
-        private readonly ServicoAtividade servicoAtividade;
-        public AtividadeController(ServicoAtividade servicoAtividade, IMapper mapeador)
-        {
-            this.servicoAtividade = servicoAtividade;
-            this.mapeador = mapeador;
-        }
-
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var results = await servicoAtividade.SelecionarTodosAsync();
 
-            if (results.IsFailed)
-                return StatusCode(500);
-
             var resultVm = mapeador.Map<ListarAtividadeViewModel[]>(results.Value);
+
+            Log.Information("Foram seleciados {QuantidadeRegistros} registros", resultVm.Count());
 
             return Ok(resultVm);
         }
@@ -35,9 +27,6 @@ namespace OrganizaMed.WebApi.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await servicoAtividade.SelecionarPorIdAsync(id);
-
-            if (result.IsFailed)
-                return NotFound(result.Errors);
 
             var resultVm = mapeador.Map<VisualizarAtividadeViewModel>(result.Value);
 
@@ -61,9 +50,6 @@ namespace OrganizaMed.WebApi.Controllers
         public async Task<IActionResult> Put(Guid id, EditarAtividadeViewModel atividadeVm)
         {
             var atividadeOriginal = await servicoAtividade.SelecionarPorIdAsync(id);
-
-            if (atividadeOriginal.IsFailed)
-                return NotFound(atividadeOriginal.Errors);
 
             var atividadeEditada = mapeador.Map(atividadeVm, atividadeOriginal.Value);
 
