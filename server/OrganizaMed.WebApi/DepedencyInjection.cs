@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NoteKeeper.Dominio.Compartilhado;
 using OrganizaMed.Aplicacao.Medico;
 using OrganizaMed.Dominio.ModuloAtividade;
@@ -17,7 +18,7 @@ namespace OrganizaMed.WebApi
     {
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = config["SqlServer"];
+            var connectionString = config["SQL_SERVER_CONNECTION_STRING"];
 
             services.AddDbContext<IContextoPersistencia, OrganizaMedDbContext>(optionsBuilder =>
             {
@@ -43,6 +44,7 @@ namespace OrganizaMed.WebApi
             {
                 config.AddProfile<MedicoProfile>();
                 config.AddProfile<AtividadeProfile>();
+                config.AddProfile<UsuarioProfile>();
             });
         }
 
@@ -77,6 +79,41 @@ namespace OrganizaMed.WebApi
             services.AddControllers(options =>
             {
                 options.Filters.Add<ResponseWrapperFilter>();
+            });
+        }
+
+        public static void ConfigureSwaggerAuthorization(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "organiza-med-api", Version = "v1" });
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Description = "Por favor informe o token no padrão {Bearer token}",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
             });
         }
     }

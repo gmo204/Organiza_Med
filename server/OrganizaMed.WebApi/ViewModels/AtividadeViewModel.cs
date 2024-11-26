@@ -1,5 +1,4 @@
 ﻿using OrganizaMed.Dominio.ModuloAtividade;
-using OrganizaMed.Dominio.ModuloMedico;
 
 namespace OrganizaMed.WebApi.ViewModels
 {

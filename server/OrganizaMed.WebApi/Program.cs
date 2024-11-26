@@ -1,6 +1,5 @@
-using NoteKeeper.Dominio.Compartilhado;
-using OrganizaMed.Infra.Orm.Compartilhado;
 using OrganizaMed.WebApi.Config;
+using OrganizaMed.WebApi.Identity;
 using Serilog;
 
 namespace OrganizaMed.WebApi
@@ -22,6 +21,12 @@ namespace OrganizaMed.WebApi
             builder.Services.ConfigureSerilog(builder.Logging);
 
             builder.Services.ConfigureCors(politicaCors);
+
+            builder.Services.ConfigureIdentity();
+
+            //builder.Services.ConfigureJwt(builder.Configuration);
+
+            builder.Services.ConfigureSwaggerAuthorization();
 
             builder.Services.ConfigureControllersWithFilters();
 
