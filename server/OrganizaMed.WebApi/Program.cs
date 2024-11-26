@@ -1,15 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using NoteKeeper.Dominio.Compartilhado;
-using OrganizaMed.Aplicacao.Medico;
-using OrganizaMed.Dominio.ModuloAtividade;
-using OrganizaMed.Dominio.ModuloMedico;
 using OrganizaMed.Infra.Orm.Compartilhado;
-using OrganizaMed.InfraOrm.ModuloAtividade;
-using OrganizaMed.InfraOrm.ModuloMedico;
 using OrganizaMed.WebApi.Config;
-using OrganizaMed.WebApi.Config.Mappiing;
-using OrganizaMed.WebApi.Config.Mapping;
-using OrganizaMed.WebApi.Filters;
+using Serilog;
 
 namespace OrganizaMed.WebApi
 {
@@ -17,50 +9,25 @@ namespace OrganizaMed.WebApi
     {
         public static void Main(string[] args)
         {
-            const string politicaCorsPersonalizada = "_politicaCorsPersonalizada";
+            const string politicaCors = "_minhaPoliticaCors";
 
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("SqlServer");
+            builder.Services.ConfigureDbContext(builder.Configuration);
 
-            builder.Services.AddDbContext<IContextoPersistencia, OrganizaMedDbContext>(optionsBuilder =>
-            {
-                optionsBuilder.UseSqlServer(connectionString, dbOptions => dbOptions.EnableRetryOnFailure());
-            });
+            builder.Services.ConfigureCoreServices();
 
-            builder.Services.AddScoped<IRepositorioMedico, RepositorioMedicoOrm>();
-            builder.Services.AddScoped<ServicoMedico>();
+            builder.Services.ConfigureAutoMapper();
 
-            builder.Services.AddScoped<IRepositorioAtividade, RepositorioAtividadeOrm>();
-            builder.Services.AddScoped<ServicoAtividade>();
+            builder.Services.ConfigureSerilog(builder.Logging);
 
-            builder.Services.AddAutoMapper(config =>
-            {
-                config.AddProfile<MedicoProfile>();
-                config.AddProfile<AtividadeProfile>();
-            });
+            builder.Services.ConfigureCors(politicaCors);
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(name: politicaCorsPersonalizada, policy =>
-                {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
-
-            builder.Services.AddControllers(options =>
-            {
-                options.Filters.Add<ResponseWrapperFilter>();
-            });
+            builder.Services.ConfigureControllersWithFilters();
 
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen();
-
-            builder.Services.ConfigureSerilog(builder.Logging);
 
             var app = builder.Build();
 
@@ -69,26 +36,30 @@ namespace OrganizaMed.WebApi
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            {
-                using var scope = app.Services.CreateScope();
+            var migracaoConcluida = app.AutoMigrateDatabase();
 
-                var dbContext = scope.ServiceProvider.GetRequiredService<IContextoPersistencia>();
+            if (migracaoConcluida) Log.Information("Migração de banco de dados concluída");
 
-                if (dbContext is OrganizaMedDbContext organizaMedDbContext)
-                {
-                    MigradorBancoDados.AtualizarBancoDados(organizaMedDbContext);
-                }
-            }
+            else Log.Information("Nenhuma migração de banco de dados pendente");
 
             app.UseHttpsRedirection();
 
-            app.UseCors(politicaCorsPersonalizada);
+            app.UseCors(politicaCors);
 
             app.UseAuthorization();
 
             app.MapControllers();
 
-            app.Run();
+            try
+            {
+                app.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal("Ocorreu um erro que ocasionou no fechamento da aplicação.", ex);
+
+                return;
+            }
         }
     }
 }
