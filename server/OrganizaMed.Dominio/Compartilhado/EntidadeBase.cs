@@ -9,7 +9,7 @@ namespace OrganizaMed.Dominio.Compartilhado
 
         public EntidadeBase()
         {
-            Id = new Guid();
+            Id =  Guid.NewGuid();
         }
 
         public Guid UsuarioId { get; set; }

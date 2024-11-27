@@ -12,6 +12,7 @@ namespace OrganizaMed.WebApi.Config.Mapping
             CreateMap<Atividade, ListarAtividadeViewModel>();
             CreateMap<Atividade, VisualizarAtividadeViewModel>();
 
+            CreateMap<InserirAtividadeViewModel, Atividade>();
             CreateMap<Medico, ListarMedicoViewModel>();
         }
     }

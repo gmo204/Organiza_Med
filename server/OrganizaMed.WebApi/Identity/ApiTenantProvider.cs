@@ -5,21 +5,20 @@ namespace OrganizaMed.WebApi.Identity
 {
     public class ApiTenantProvider : ITenantProvider
     {
-        private readonly IHttpContextAccessor ContextAccessor;
+        private readonly IHttpContextAccessor contextAccessor;
 
         public ApiTenantProvider(IHttpContextAccessor contextAccessor)
         {
-            this.ContextAccessor = contextAccessor;
+            this.contextAccessor = contextAccessor;
         }
         public Guid? UsuarioId 
         {
             get
             {
-                var claimId = ContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier);
+                var claimId = contextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier);
 
                 if (claimId == null)
                     return null;
-                
 
                 return Guid.Parse(claimId.Value);
             }

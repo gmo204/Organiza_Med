@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OrganizaMed.Aplicacao.Medico;
 using OrganizaMed.Dominio.ModuloAtividade;
@@ -9,6 +10,7 @@ namespace OrganizaMed.WebApi.Controllers
 {
     [Route("api/atividades")]
     [ApiController]
+    [Authorize]
     public class AtividadeController(ServicoAtividade servicoAtividade, IMapper mapeador) : ControllerBase
     {
         [HttpGet]

@@ -24,7 +24,7 @@ namespace OrganizaMed.WebApi
 
             builder.Services.ConfigureIdentity();
 
-            //builder.Services.ConfigureJwt(builder.Configuration);
+            builder.Services.ConfigureJwt(builder.Configuration);
 
             builder.Services.ConfigureSwaggerAuthorization();
 
@@ -62,8 +62,6 @@ namespace OrganizaMed.WebApi
             catch (Exception ex)
             {
                 Log.Fatal("Ocorreu um erro que ocasionou no fechamento da aplicação.", ex);
-
-                return;
             }
         }
     }
