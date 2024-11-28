@@ -14,7 +14,7 @@ import { MedicoService } from '../services/medico.service';
   imports: [NgIf, RouterLink, AsyncPipe, MatButtonModule, MatIconModule],
   templateUrl: './excluir-medico.component.html',
 })
-export class ExclusaoNotaComponent implements OnInit {
+export class ExcluirMedicoComponent implements OnInit {
   id?: string;
   medico$?: Observable<VisualizarMedicoViewModel>;
 

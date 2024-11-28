@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { ListagemMedicosComponent } from "./listar/listar-medico.component";
 import { CadastrarMedicoComponent } from "./cadastrar/cadastrar-medico.component";
 import { EditarMedicoComponent } from "./editar/editar-medico.component";
+import { ExcluirMedicoComponent } from "./excluir/excluir-medico.component";
 
 export const MedicosRoutes : Routes = [
   {
@@ -12,5 +13,6 @@ export const MedicosRoutes : Routes = [
   { path: 'listar', component: ListagemMedicosComponent },
   { path: 'cadastrar', component: CadastrarMedicoComponent },
   { path: 'editar', component: EditarMedicoComponent },
+  { path: 'excluir', component: ExcluirMedicoComponent },
 
 ]
