@@ -16,4 +16,11 @@ export const routes: Routes = [
         (m) => m.MedicosRoutes
       ),
   },
+  {
+    path: 'atividades',
+    loadChildren: () =>
+      import('./views/atividade/atividades.routes').then(
+        (m) => m.AtividadesRoutes
+      ),
+  },
 ];
