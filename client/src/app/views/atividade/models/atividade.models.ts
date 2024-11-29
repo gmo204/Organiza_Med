@@ -1,5 +1,10 @@
 import { ListarMedicoViewModel } from "../../medico/models/medico.model";
 
+export enum TipoAtividade {
+  Consulta,
+  Cirurgia
+}
+
 export interface InserirAtividadeViewModel {
   tipo : number;
   horaInicio: Date;

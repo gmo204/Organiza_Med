@@ -1,0 +1,63 @@
+<main class="container my-4">
+  <div class="col col-lg-8 col-xxl-6">
+    <h1 class="fs-2">Cadastro de Atividade</h1>
+
+    <hr />
+
+    <form [formGroup]="atividadeForm" (ngSubmit)="cadastrar()">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Tipo da Atividade</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+            {{ tipo }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="atividadeForm.get('tipo')?.invalid && atividadeForm.get('tipo')?.touched">
+          O tipo da atividade é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Horário de Início</mat-label>
+        <mat-error *ngIf="atividadeForm.get('horaInicio')?.invalid && atividadeForm.get('horaInicio')?.touched">
+          O horário de início é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Horário de Término</mat-label>
+        <mat-error *ngIf="atividadeForm.get('horaFim')?.invalid && atividadeForm.get('horaFim')?.touched">
+          O horário de término é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Lista de médicos disponíveis</mat-label>
+        <mat-select formControlName="medicoId">
+          <mat-option *ngFor="let medico of medicos" [value]="medico.id">
+            {{ medico.nome }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="atividadeForm.get('medicoId')?.invalid && atividadeForm.get('medicoId')?.touched">
+          A seleção de médico é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+
+      <div class="row justify-content-end g-2 mt-5">
+        <button type="submit" mat-flat-button color="primary" class="col-sm-4 col-md-3">
+          <mat-icon>check</mat-icon>
+          Confirmar
+        </button>
+        <a
+          mat-stroked-button
+          class="col-sm-4 col-md-3"
+          routerLink="/notas"
+        >
+          <mat-icon>keyboard_return</mat-icon>
+          Voltar
+        </a>
+      </div>
+    </form>
+  </div>
+</main>
