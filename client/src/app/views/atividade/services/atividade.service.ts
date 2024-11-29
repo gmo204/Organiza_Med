@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AtividadeService {
 
-  private readonly url = `${environment.API_URL}/notas`;
+  private readonly url = `${environment.API_URL}/atividades`;
 
   constructor(private http: HttpClient) {}
 
