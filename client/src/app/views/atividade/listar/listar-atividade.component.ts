@@ -1,5 +1,5 @@
 import { NgIf, NgForOf, AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +24,7 @@ import { ListarAtividadeViewModel } from '../models/atividade.models';
   ],  templateUrl: './listar-atividade.component.html',
   styleUrl: './listar-atividade.component.scss'
 })
-export class ListarAtividadesComponent {
+export class ListarAtividadesComponent implements OnInit {
   atividades$?: Observable<ListarAtividadeViewModel[]>;
 
   constructor(private atividadeService: AtividadeService) {}

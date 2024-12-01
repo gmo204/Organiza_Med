@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { finalize, Observable, of, switchMap } from 'rxjs';
 import { ListarMedicoViewModel } from '../models/medico.model';
 import { MedicoService } from '../services/medico.service';
+import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
 
 @Component({
   selector: 'app-listagem-notas',
@@ -27,26 +28,19 @@ import { MedicoService } from '../services/medico.service';
 })
 export class ListagemMedicosComponent implements OnInit {
   medicos$?: Observable<ListarMedicoViewModel[]>;
-  //categorias$?: Observable<ListarCategoriaViewModel[]>;
 
   notasEmCache: ListarMedicoViewModel[];
 
   constructor(
     private medicoService: MedicoService,
-    //private categoriaService: CategoriaService,
-    //private notificacao: NotificacaoService
+    private notificacao: NotificacaoService
   ) {
     this.notasEmCache = [];
   }
 
    ngOnInit(): void {
-  //   this.categorias$ = this.categoriaService.selecionarTodos();
+    this.medicos$ = this.medicoService.selecionarTodos();
 
-  //   this.notaService.selecionarTodos().subscribe((notas) => {
-  //     this.notasEmCache = notas;
-
-  //     this.notas$ = of(notas);
-  //   });
    }
 
   filtrar(categoriaId?: string) {

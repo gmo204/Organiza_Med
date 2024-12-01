@@ -1,3 +1,4 @@
+
 <main class="container my-4">
   <h1 class="fs-2">Listagem de Medicos</h1>
 
@@ -22,13 +23,6 @@
   </section>
 
   <hr />
-
-  <!-- <div *ngIf="categorias$ | async as categorias" class="row mt-2">
-    <app-filtro-categorias
-      [categorias]="categorias"
-      (filtroAcionado)="filtrar($event)"
-    ></app-filtro-categorias>
-  </div> -->
 
   <div *ngIf="medicos$ | async as itens" class="row g-3 mt-2">
     <div *ngFor="let item of itens" class="col-md-6 col-lg-4">
