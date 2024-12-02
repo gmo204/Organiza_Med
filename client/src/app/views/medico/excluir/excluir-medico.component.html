@@ -4,11 +4,11 @@
     class="row justify-content-center g-3 mt-2"
   >
     <div class="col col-lg-8 col-xxl-6">
-      <h1 class="fs-2">Exclusão de Nota</h1>
+      <h1 class="fs-2">Exclusão de medico</h1>
 
       <hr />
 
-      <p>Deseja realmente excluir a nota "{{ medico.nome }}"?</p>
+      <p>Deseja realmente excluir o medico "{{ medico.nome }}"?</p>
 
       <div class="row justify-content-end g-2 gap-1 mt-5">
         <button
@@ -25,7 +25,7 @@
           mat-stroked-button
           class="col-md-3"
           type="button"
-          [routerLink]="['/notas', 'listar']"
+          [routerLink]="['/medicos', 'listar']"
         >
           <mat-icon>keyboard_return</mat-icon>
           Voltar

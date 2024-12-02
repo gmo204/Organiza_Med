@@ -36,7 +36,7 @@ export class CadastrarMedicoComponent {
     private notificacao: NotificacaoService
   ) {
     this.medicoForm = new FormGroup({
-      nome: new FormControl<string>('', [Validators.required]),
+      nome: new FormControl<string>('', [Validators.required, Validators.maxLength(30),Validators.minLength(3)]),
       crm: new FormControl<string>('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
       ocupado: new FormControl<boolean>(false)
     });
