@@ -37,7 +37,7 @@ export class CadastrarMedicoComponent {
   ) {
     this.medicoForm = new FormGroup({
       nome: new FormControl<string>('', [Validators.required]),
-      crm: new FormControl<string>('', [Validators.required]),
+      crm: new FormControl<string>('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
       ocupado: new FormControl<boolean>(false)
     });
   }
