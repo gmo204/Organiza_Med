@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   private processarDados(resposta: any): TokenViewModel {
-    if (resposta) return resposta.dados;
+    if (resposta) return resposta as TokenViewModel;
 
     throw new Error('Erro ao mapear token do usuário.');
   }
