@@ -71,7 +71,7 @@ export class EditarMedicoComponent implements OnInit{
 
     this.medicoService.editar(this.id, medicoEditado).subscribe((res) => {
       this.notificacao.sucesso(
-        `O medico [${res.nome}] foi editado com sucesso!`
+        `O medico [${medicoEditado.nome}] foi editado com sucesso!`
       );
 
       this.router.navigate(['/medicos']);

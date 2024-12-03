@@ -1,6 +1,6 @@
 
 <main class="container my-4">
-  <h1 class="fs-2">Listagem de Medicos</h1>
+  <h1 class="fs-2"> Listagem de Medicos</h1>
 
   <section aria-label="Opções" class="row justify-content-start g-1 gap-2">
     <a
@@ -10,15 +10,6 @@
     >
       <mat-icon>bookmark_add</mat-icon>
       Cadastrar
-    </a>
-
-    <a
-      mat-stroked-button
-      class="col-lg-4 col-xxl-2 fs-6 py-4 text-nowrap"
-      [routerLink]="['/medicos', 'listar', 'disponiveis']"
-    >
-      <mat-icon>archive</mat-icon>
-      Medicos Disponiveis
     </a>
   </section>
 
@@ -32,7 +23,7 @@
         <mat-card-header class="d-flex justify-content-between">
           <mat-card-title class="titulo-card">{{ item.nome }}</mat-card-title>
 
-          <span>{{ item.crm }}</span>
+          <span>CRM: {{ item.crm }}</span>
         </mat-card-header>
 
         <mat-card-footer class="d-flex justify-content-end gap-1 p-3 mt-auto">

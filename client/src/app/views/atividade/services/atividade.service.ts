@@ -8,7 +8,7 @@ import {
   EditarAtividadeViewModel,
   InserirAtividadeViewModel,
   ListarAtividadeViewModel,
-  VisualizarAtividadeViewModel 
+  VisualizarAtividadeViewModel
 } from '../models/atividade.models';
 import { Observable } from 'rxjs';
 
@@ -29,13 +29,13 @@ export class AtividadeService {
     id: string,
     atividadeEditada: EditarAtividadeViewModel
   ): Observable<AtividadeEditadaViewModel> {
-    const urlCompleto = `${this.url}/${id}`;
+    const urlCompleto = `${this.url}/editar/${id}`;
 
     return this.http.put<AtividadeEditadaViewModel>(urlCompleto, atividadeEditada);
   }
 
   excluir(id: string): Observable<AtividadeExcluidaViewModel> {
-    const urlCompleto = `${this.url}/${id}`;
+    const urlCompleto = `${this.url}/excluir/${id}`;
 
     return this.http.delete<AtividadeExcluidaViewModel>(urlCompleto);
   }

@@ -1,21 +1,20 @@
 <main class="container my-4">
   <div class="col col-lg-8 col-xxl-6">
-    <h1 class="fs-2">Cadastro de Nota</h1>
+    <h1 class="fs-2">Editar Medico</h1>
 
     <hr />
 
     <form [formGroup]="medicoForm" (ngSubmit)="editar()">
       <mat-form-field class="w-100 mt-5" appearance="fill">
-        <mat-label>Nome </mat-label>
+        <mat-label> Nome </mat-label>
         <input
           matInput
           data-cy="nome"
           formControlName="nome"
-          autocomplete="name"
           placeholder="Ex: Joao Silva"
           [maxlength]="30"
         />
-        <mat-icon matSuffix color="primary">Nome</mat-icon>
+        <mat-icon matSuffix color="primary">name</mat-icon>
         <mat-error class="text-white" *ngIf="nome?.invalid">
           <span *ngIf="nome?.errors?.['required']"
             >O nome precisa ser preenchido.</span
@@ -35,11 +34,10 @@
           matInput
           data-cy="crm"
           formControlName="crm"
-          autocomplete="none"
           placeholder="Ex: 12345-SC"
           [maxlength]="30"
         />
-        <mat-icon matSuffix color="primary">CRM</mat-icon>
+        <mat-icon matSuffix color="primary">none</mat-icon>
         <mat-error class="text-white" *ngIf="crm?.invalid">
           <span *ngIf="crm?.errors?.['required']"
             >O crm precisa ser preenchido.</span
@@ -61,7 +59,7 @@
         <a
           mat-stroked-button
           class="col-sm-4 col-md-3"
-          routerLink="/notas"
+          routerLink="/medicos"
         >
           <mat-icon>keyboard_return</mat-icon>
           Voltar

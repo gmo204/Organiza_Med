@@ -12,7 +12,7 @@ export const MedicosRoutes : Routes = [
   },
   { path: 'listar', component: ListagemMedicosComponent },
   { path: 'cadastrar', component: CadastrarMedicoComponent },
-  { path: 'editar', component: EditarMedicoComponent },
-  { path: 'excluir', component: ExcluirMedicoComponent }
+  { path: 'editar/:id', component: EditarMedicoComponent },
+  { path: 'excluir/:id', component: ExcluirMedicoComponent }
 
 ]
