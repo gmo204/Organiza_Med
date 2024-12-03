@@ -40,7 +40,10 @@ namespace OrganizaMed.WebApi.Controllers
         {
             var atividade = mapeador.Map<Atividade>(atividadeVm);
 
-            servicoAtividade.VerificarConflitosAsync(atividade);
+            var conflitos = await servicoAtividade.VerificarConflitosAsync(atividade);
+
+            if (conflitos)
+                return BadRequest("Há conflitos com as atividades existentes ou tempos de descanso.");
 
             var resultado = await servicoAtividade.InserirAsync(atividade);
 
@@ -56,6 +59,11 @@ namespace OrganizaMed.WebApi.Controllers
             var atividadeOriginal = await servicoAtividade.SelecionarPorIdAsync(id);
 
             var atividadeEditada = mapeador.Map(atividadeVm, atividadeOriginal.Value);
+
+            var conflitos = await servicoAtividade.VerificarConflitosAsync(atividadeEditada);
+
+            if (conflitos)
+                return BadRequest("Há conflitos com as atividades existentes ou tempos de descanso.");
 
             var edicao = await servicoAtividade.EditarAsync(atividadeEditada);
 

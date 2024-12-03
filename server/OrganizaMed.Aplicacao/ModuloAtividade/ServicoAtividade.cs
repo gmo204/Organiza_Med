@@ -6,16 +6,17 @@ namespace OrganizaMed.Aplicacao.Medico
     public class ServicoAtividade
     {
         private readonly IRepositorioAtividade repositorioAtividade;
+        private readonly ValidarAtividade validadorAtividade;
         public ServicoAtividade(IRepositorioAtividade repositorioAtividade)
         {
             this.repositorioAtividade = repositorioAtividade;
+            this.validadorAtividade = new ValidarAtividade(repositorioAtividade);
+
         }
 
         public async Task<Result<Atividade>> InserirAsync(Atividade atividade)
         {
-            var validador = new ValidarAtividade(repositorioAtividade);
-
-            var resultadoValidacao = await validador.ValidateAsync(atividade);
+            var resultadoValidacao = await validadorAtividade.ValidateAsync(atividade);
 
             if (!resultadoValidacao.IsValid)
             {
@@ -33,9 +34,7 @@ namespace OrganizaMed.Aplicacao.Medico
 
         public async Task<Result<Atividade>> EditarAsync(Atividade atividade)
         {
-            var validador = new ValidarAtividade(repositorioAtividade);
-
-            var resultadoValidacao = await validador.ValidateAsync(atividade);
+            var resultadoValidacao = await validadorAtividade.ValidateAsync(atividade);
 
             if (!resultadoValidacao.IsValid)
             {
@@ -72,6 +71,29 @@ namespace OrganizaMed.Aplicacao.Medico
             var atividade = await repositorioAtividade.SelecionarPorIdAsync(id);
 
             return Result.Ok(atividade);
+        }
+
+        public async Task<bool> VerificarConflitosAsync(Atividade novaAtividade)
+        {
+            var medicoIds = novaAtividade.Medicos.Select(m => m.Id).ToList();
+            var atividadesExistentes = await repositorioAtividade.SelecionarPorMedicosEPeriodoAsync(
+                medicoIds,
+                novaAtividade.HoraInicio,
+                novaAtividade.HoraFim
+            );
+
+            return atividadesExistentes.Any(a =>
+                a.HoraFim.Add(GetTempoDeDescanso(a.Tipo)) > novaAtividade.HoraInicio);
+        }
+
+        private TimeSpan GetTempoDeDescanso(TipoAtividadeEnum tipo)
+        {
+            return tipo switch
+            {
+                TipoAtividadeEnum.Cirurgia => TimeSpan.FromHours(4),
+                TipoAtividadeEnum.Consulta => TimeSpan.FromMinutes(10),
+                _ => TimeSpan.Zero
+            };
         }
     }
 }
