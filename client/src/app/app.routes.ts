@@ -38,7 +38,7 @@ export const routes: Routes = [
       import('./views/dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
-      canMatch: [authGuard]
+      //canMatch: [authGuard]
   },
   {
     path: 'login',
@@ -46,7 +46,7 @@ export const routes: Routes = [
       import('./core/auth/views/login/login.component').then(
         (c) => c.LoginComponent
       ),
-    canMatch: [authUserGuard],
+    //canMatch: [authUserGuard],
   },
   {
     path: 'registro',
@@ -54,7 +54,7 @@ export const routes: Routes = [
       import('./core/auth/views/registro/registro.component').then(
         (c) => c.RegistroComponent
       ),
-    canMatch: [authUserGuard],
+    //canMatch: [authUserGuard],
   },
   {
     path: 'medicos',
@@ -62,7 +62,7 @@ export const routes: Routes = [
       import('./views/medico/medicos.routes').then(
         (m) => m.MedicosRoutes
       ),
-      canMatch: [authGuard]
+      //canMatch: [authGuard]
   },
   {
     path: 'atividades',
@@ -70,6 +70,6 @@ export const routes: Routes = [
       import('./views/atividade/atividades.routes').then(
         (m) => m.AtividadesRoutes
       ),
-      canMatch: [authGuard]
+      //canMatch: [authGuard]
   },
 ];

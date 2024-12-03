@@ -19,8 +19,6 @@ export class AuthService {
   ): Observable<TokenViewModel> {
     const urlCompleto = `${this.apiUrl}/auth/registrar`;
 
-    console.log(registro)
-
     return this.http
       .post<TokenViewModel>(urlCompleto, registro)
       .pipe(map(this.processarDados));
@@ -28,8 +26,6 @@ export class AuthService {
 
   public login(loginUsuario: AutenticarUsuarioViewModel) {
     const urlCompleto = `${this.apiUrl}/auth/autenticar`;
-
-    console.log(loginUsuario)
 
     return this.http
       .post<TokenViewModel>(urlCompleto, loginUsuario)
@@ -47,8 +43,6 @@ export class AuthService {
   }
 
   private processarDados(resposta: any): TokenViewModel {
-    console.log(resposta)
-
     if (resposta) return resposta.dados;
 
     throw new Error('Erro ao mapear token do usuário.');

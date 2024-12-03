@@ -1,59 +1,71 @@
 <main class="container my-4">
   <div class="col col-lg-8 col-xxl-6">
     <h1 class="fs-2">Cadastro de Atividade</h1>
-
     <hr />
 
     <form [formGroup]="atividadeForm" (ngSubmit)="cadastrar()">
+
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Tipo da Atividade</mat-label>
-        <mat-select formControlName="tipo">
-          <mat-option *ngFor="let tipo of tipos" [value]="tipo">
-            {{ tipo }}
-          </mat-option>
+        <mat-select data-cy="tipo" formControlName="tipo">
+          <mat-option
+              *ngFor="let tipo of tipoAtividades; index as i"
+              [value]="i"
+            >
+              {{ tipo }}
+            </mat-option>
         </mat-select>
-        <mat-error *ngIf="atividadeForm.get('tipo')?.invalid && atividadeForm.get('tipo')?.touched">
-          O tipo da atividade é obrigatório
+        <mat-error class="text-white" *ngIf="tipo?.invalid">
+          O tipo da atividade precisa ser selecionado.
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Horário de Início</mat-label>
-        <mat-error *ngIf="atividadeForm.get('horaInicio')?.invalid && atividadeForm.get('horaInicio')?.touched">
+        <input
+        matInput
+        data-cy="horaInicio"
+        formControlName="horaInicio"
+        type="datetime-local"
+        placeholder="Ex: 18:00"
+        />
+        <mat-error class="text-white" *ngIf="horaInicio?.invalid">
           O horário de início é obrigatório
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>Horário de Término</mat-label>
-        <mat-error *ngIf="atividadeForm.get('horaFim')?.invalid && atividadeForm.get('horaFim')?.touched">
+        <input
+        matInput
+        data-cy="horaFim"
+        type="datetime-local"
+        formControlName="horaFim"
+        placeholder="Ex: 18:00"
+        />
+        <mat-error class="text-white" *ngIf="horaFim?.invalid">
           O horário de término é obrigatório
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Lista de médicos disponíveis</mat-label>
-        <mat-select formControlName="medicoId">
-          <mat-option *ngFor="let medico of medicos" [value]="medico.id">
+        <mat-label>Selecione os Médicos</mat-label>
+        <mat-select data-cy="medicoId" formControlName="medicoId" multiple>
+          <mat-option *ngFor="let medico of medicoId" [value]="medico.id">
             {{ medico.nome }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="atividadeForm.get('medicoId')?.invalid && atividadeForm.get('medicoId')?.touched">
-          A seleção de médico é obrigatória
+        <mat-error class="text-white" *ngIf="medicoId?.invalid">
+          Ao menos um medico precisa ser selecionado.
         </mat-error>
       </mat-form-field>
-
 
       <div class="row justify-content-end g-2 mt-5">
         <button type="submit" mat-flat-button color="primary" class="col-sm-4 col-md-3">
           <mat-icon>check</mat-icon>
           Confirmar
         </button>
-        <a
-          mat-stroked-button
-          class="col-sm-4 col-md-3"
-          routerLink="/notas"
-        >
+        <a mat-stroked-button class="col-sm-4 col-md-3" routerLink="/home">
           <mat-icon>keyboard_return</mat-icon>
           Voltar
         </a>

@@ -1,6 +1,6 @@
 import { ListarMedicoViewModel } from "../../medico/models/medico.model";
 
-export enum TipoAtividade {
+export enum TipoAtividadeEnum {
   Consulta,
   Cirurgia
 }
@@ -37,16 +37,12 @@ export interface AtividadeEditadaViewModel {
   medicoId: string;
 }
 
-export interface VisualizarAtividadeViewModel {
-  id: string;
+export interface ListarAtividadeViewModel {
   tipo : number;
   horaInicio: Date;
-  horaFim: Date;
-
-  medico: ListarMedicoViewModel;
 }
 
-export interface ListarAtividadeViewModel {
+export interface VisualizarAtividadeViewModel {
   id: string;
   tipo : number;
   horaInicio: Date;

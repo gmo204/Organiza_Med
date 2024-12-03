@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { AtividadeEditadaViewModel, AtividadeExcluidaViewModel, AtividadeInseridaViewModel, EditarAtividadeViewModel, InserirAtividadeViewModel, ListarAtividadeViewModel, VisualizarAtividadeViewModel } from '../models/atividade.models';
+import {
+  AtividadeEditadaViewModel,
+  AtividadeExcluidaViewModel,
+  AtividadeInseridaViewModel,
+  EditarAtividadeViewModel,
+  InserirAtividadeViewModel,
+  ListarAtividadeViewModel,
+  VisualizarAtividadeViewModel 
+} from '../models/atividade.models';
 import { Observable } from 'rxjs';
 
 @Injectable({
