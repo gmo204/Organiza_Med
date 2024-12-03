@@ -1,6 +1,5 @@
 ﻿using FluentResults;
 using OrganizaMed.Dominio.ModuloAtividade;
-using OrganizaMed.Dominio.ModuloMedico;
 
 namespace OrganizaMed.Aplicacao.Medico
 {
@@ -14,7 +13,7 @@ namespace OrganizaMed.Aplicacao.Medico
 
         public async Task<Result<Atividade>> InserirAsync(Atividade atividade)
         {
-            var validador = new ValidarAtividade();
+            var validador = new ValidarAtividade(repositorioAtividade);
 
             var resultadoValidacao = await validador.ValidateAsync(atividade);
 
@@ -34,7 +33,7 @@ namespace OrganizaMed.Aplicacao.Medico
 
         public async Task<Result<Atividade>> EditarAsync(Atividade atividade)
         {
-            var validador = new ValidarAtividade();
+            var validador = new ValidarAtividade(repositorioAtividade);
 
             var resultadoValidacao = await validador.ValidateAsync(atividade);
 

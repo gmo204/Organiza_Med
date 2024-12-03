@@ -40,6 +40,8 @@ namespace OrganizaMed.WebApi.Controllers
         {
             var atividade = mapeador.Map<Atividade>(atividadeVm);
 
+            servicoAtividade.VerificarConflitosAsync(atividade);
+
             var resultado = await servicoAtividade.InserirAsync(atividade);
 
             if (resultado.IsFailed)

@@ -13,6 +13,7 @@ namespace OrganizaMed.WebApi.ViewModels
     public class EditarAtividadeViewModel : InserirAtividadeViewModel { }
     public class ListarAtividadeViewModel
     {
+        public required Guid id { get; set; }
         public required TipoAtividadeEnum Tipo { get; set; }
         public required DateTime HoraInicio { get; set; }
     }
