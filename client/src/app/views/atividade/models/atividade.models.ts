@@ -38,6 +38,7 @@ export interface AtividadeEditadaViewModel {
 }
 
 export interface ListarAtividadeViewModel {
+  id: string;
   tipo : number;
   horaInicio: Date;
 }
