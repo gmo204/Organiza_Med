@@ -1,0 +1,78 @@
+<main class="container my-4">
+  <div class="col col-lg-8 col-xxl-6">
+    <h1 class="fs-2">Cadastro de Consulta</h1>
+    <hr />
+
+    <form [formGroup]="atividadeForm" (ngSubmit)="cadastrar()">
+
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Data</mat-label>
+        <input
+          matInput
+          data-cy="data"
+          formControlName="data"
+          type="date"
+          aria-label="Data do Compromisso"
+        />
+        <mat-icon matSuffix color="primary">calendar_today</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Hora de Início</mat-label>
+        <input
+          matInput
+          data-cy="horaInicio"
+          formControlName="horaInicio"
+          type="time"
+          placeholder="18:00"
+        />
+        <mat-icon matSuffix color="primary">schedule</mat-icon>
+        <mat-error class="text-white" *ngIf="horaInicio?.invalid">
+          A hora de início precisa ser preenchida.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Hora de Término</mat-label>
+        <input
+          matInput
+          data-cy="horaFim"
+          formControlName="horaFim"
+          type="time"
+          placeholder="21:00"
+        />
+        <mat-icon matSuffix color="primary">schedule</mat-icon>
+        <mat-error class="text-white" *ngIf="horaFim?.invalid">
+          A hora de término precisa ser preenchida.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Medico</mat-label>
+        <mat-select formControlName="medicoId">
+          <mat-option
+            *ngFor="let medico of medicos$"
+            [value]="medico.id"
+            >{{ medico.nome }}</mat-option
+          >
+        </mat-select>
+        <mat-icon matSuffix color="primary">stethoscope</mat-icon>
+        <mat-error *ngIf="medicoId?.invalid"
+          >o Medico é obrigatório</mat-error
+        >
+      </mat-form-field>
+
+
+      <div class="row justify-content-end g-2 mt-5">
+        <button type="submit" mat-flat-button color="primary" class="col-sm-4 col-md-3">
+          <mat-icon>check</mat-icon>
+          Confirmar
+        </button>
+        <a mat-stroked-button class="col-sm-4 col-md-3" routerLink="/atividades">
+          <mat-icon>keyboard_return</mat-icon>
+          Voltar
+        </a>
+      </div>
+    </form>
+  </div>
+</main>
