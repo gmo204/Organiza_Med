@@ -23,16 +23,10 @@ namespace OrganizaMed.InfraOrm.ModuloAtividade
 
         public async Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio, DateTime fim, TipoAtividadeEnum tipo)
         {
-            if (tipo == 0)
-                fim = fim.AddMinutes(10);
-            else
-                fim = fim.AddHours(4);
-
             return await registros
                 .Include(x => x.Medicos)
                 .Where(a => a.Medicos.Any(m => medicoIds.Contains(m.Id)) &&
                             (
-                                // Verifica sobreposição direta
                                 a.HoraFim > inicio &&
                                 a.HoraInicio < fim))
                 .ToListAsync();

@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.Aplicacao", "Or
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.WebApi", "OrganizaMed.WebApi\OrganizaMed.WebApi.csproj", "{7DC696A9-AB53-4D3F-9985-DCE100E9ED58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizaMed.Infra.Orm", "OrganizaMed.Infra.Orm\OrganizaMed.Infra.Orm.csproj", "{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.Infra.Orm", "OrganizaMed.Infra.Orm\OrganizaMed.Infra.Orm.csproj", "{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Testes", "6 - Testes", "{AF5A3C82-ACD7-48F0-A362-01401C8A9CAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

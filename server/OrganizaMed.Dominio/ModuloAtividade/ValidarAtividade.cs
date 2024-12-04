@@ -42,13 +42,14 @@ namespace OrganizaMed.Dominio.ModuloAtividade
             {
                 var tempoDescanso = GetTempoDeDescanso(atividade.Tipo);
 
-                if (atividade.HoraFim.Add(tempoDescanso) > novaAtividade.HoraInicio)
+                if (atividade.HoraInicio < novaAtividade.HoraFim &&
+                    atividade.HoraFim.Add(tempoDescanso) > novaAtividade.HoraInicio)
                 {
-                    return false; // Conflito encontrado
+                    return false;
                 }
             }
 
-            return true; // Sem conflitos
+            return true; 
         }
 
         private TimeSpan GetTempoDeDescanso(TipoAtividadeEnum tipo)

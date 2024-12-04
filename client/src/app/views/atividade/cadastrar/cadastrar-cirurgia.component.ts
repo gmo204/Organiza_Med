@@ -67,6 +67,7 @@ export class CadastrarAtividadeComponent implements OnInit{
 
   ngOnInit(): void {
     this.medicos = this.route.snapshot.data['medicoId']
+    console.log()
   }
 
   cadastrar(): void {

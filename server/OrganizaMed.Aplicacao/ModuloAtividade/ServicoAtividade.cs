@@ -72,29 +72,5 @@ namespace OrganizaMed.Aplicacao.Medico
 
             return Result.Ok(atividade);
         }
-
-        public async Task<bool> VerificarConflitosAsync(Atividade novaAtividade)
-        {
-            var medicoIds = novaAtividade.Medicos.Select(m => m.Id).ToList();
-            var atividadesExistentes = await repositorioAtividade.SelecionarPorMedicosEPeriodoAsync(
-                medicoIds,
-                novaAtividade.HoraInicio,
-                novaAtividade.HoraFim,
-                novaAtividade.Tipo
-            );
-
-            return atividadesExistentes.Any(a =>
-                a.HoraFim.Add(GetTempoDeDescanso(a.Tipo)) > novaAtividade.HoraInicio);
-        }
-
-        private TimeSpan GetTempoDeDescanso(TipoAtividadeEnum tipo)
-        {
-            return tipo switch
-            {
-                TipoAtividadeEnum.Cirurgia => TimeSpan.FromHours(4),
-                TipoAtividadeEnum.Consulta => TimeSpan.FromMinutes(10),
-                _ => TimeSpan.Zero
-            };
-        }
     }
 }
