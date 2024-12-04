@@ -79,7 +79,8 @@ namespace OrganizaMed.Aplicacao.Medico
             var atividadesExistentes = await repositorioAtividade.SelecionarPorMedicosEPeriodoAsync(
                 medicoIds,
                 novaAtividade.HoraInicio,
-                novaAtividade.HoraFim
+                novaAtividade.HoraFim,
+                novaAtividade.Tipo
             );
 
             return atividadesExistentes.Any(a =>

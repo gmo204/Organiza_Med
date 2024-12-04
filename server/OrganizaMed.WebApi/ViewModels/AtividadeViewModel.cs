@@ -20,6 +20,7 @@ namespace OrganizaMed.WebApi.ViewModels
 
     public class VisualizarAtividadeViewModel
     {
+        public required Guid id { get; set; }
         public required List<ListarMedicoViewModel> Medicos { get; set; }
 
         public required TipoAtividadeEnum Tipo { get; set; }

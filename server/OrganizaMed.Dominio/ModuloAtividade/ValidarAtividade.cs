@@ -36,7 +36,7 @@ namespace OrganizaMed.Dominio.ModuloAtividade
             var medicoIds = novaAtividade.Medicos.Select(m => m.Id);
 
             var atividadesConflitantes = await repositorioAtividade
-                .SelecionarPorMedicosEPeriodoAsync(medicoIds, novaAtividade.HoraInicio, novaAtividade.HoraFim);
+                .SelecionarPorMedicosEPeriodoAsync(medicoIds, novaAtividade.HoraInicio, novaAtividade.HoraFim, novaAtividade.Tipo);
 
             foreach (var atividade in atividadesConflitantes)
             {

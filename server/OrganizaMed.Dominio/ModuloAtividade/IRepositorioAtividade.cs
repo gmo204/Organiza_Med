@@ -5,6 +5,6 @@ namespace OrganizaMed.Dominio.ModuloAtividade
 {
     public interface IRepositorioAtividade : IRepositorioBase<Atividade>
     {
-        Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio, DateTime fim);
+        Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio, DateTime fim, TipoAtividadeEnum tipo);
     }
 }

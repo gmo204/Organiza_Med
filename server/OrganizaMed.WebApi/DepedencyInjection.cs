@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using eAgenda.WebApi.Config.AutomapperConfig;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NoteKeeper.Dominio.Compartilhado;
 using OrganizaMed.Aplicacao.Medico;
@@ -11,6 +12,7 @@ using OrganizaMed.WebApi.Config.Mappiing;
 using OrganizaMed.WebApi.Config.Mapping;
 using OrganizaMed.WebApi.Filters;
 using Serilog;
+using static AtividadeProfile;
 
 namespace OrganizaMed.WebApi
 {
@@ -36,6 +38,8 @@ namespace OrganizaMed.WebApi
             
             services.AddScoped<IRepositorioAtividade, RepositorioAtividadeOrm>();
             services.AddScoped<ServicoAtividade>();
+
+            services.AddScoped<FormsAtividadeMappingAction>();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services) 
@@ -46,6 +50,9 @@ namespace OrganizaMed.WebApi
                 config.AddProfile<AtividadeProfile>();
                 config.AddProfile<UsuarioProfile>();
             });
+
+            services.AddTransient<UsuarioResolver>();
+            services.AddTransient<FormsAtividadeMappingAction>();
         }
 
         public static void ConfigureCors(this IServiceCollection services, string politica)

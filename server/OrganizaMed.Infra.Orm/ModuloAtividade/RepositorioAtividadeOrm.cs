@@ -2,7 +2,6 @@
 using NoteKeeper.Dominio.Compartilhado;
 using OrganizaMed.Dominio.ModuloAtividade;
 using OrganizaMed.Infra.Orm.Compartilhado;
-using System.Linq;
 
 namespace OrganizaMed.InfraOrm.ModuloAtividade
 {
@@ -22,32 +21,21 @@ namespace OrganizaMed.InfraOrm.ModuloAtividade
             return await registros.Include(x => x.Medicos).ToListAsync();
         }
 
-        public async Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio, DateTime fim)
+        public async Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio, DateTime fim, TipoAtividadeEnum tipo)
         {
+            if (tipo == 0)
+                fim = fim.AddMinutes(10);
+            else
+                fim = fim.AddHours(4);
+
             return await registros
                 .Include(x => x.Medicos)
                 .Where(a => a.Medicos.Any(m => medicoIds.Contains(m.Id)) &&
                             (
                                 // Verifica sobreposição direta
                                 a.HoraFim > inicio &&
-                                a.HoraInicio < fim ||
-
-                                // Verifica conflito com o tempo de descanso
-                                a.HoraFim.Add(GetTempoDeDescanso(a.Tipo)) > inicio &&
-                                a.HoraInicio < fim
-                            ))
+                                a.HoraInicio < fim))
                 .ToListAsync();
         }
-
-        private TimeSpan GetTempoDeDescanso(TipoAtividadeEnum tipo)
-        {
-            return tipo switch
-            {
-                TipoAtividadeEnum.Cirurgia => TimeSpan.FromHours(4), // Descanso de 4 horas após cirurgias
-                TipoAtividadeEnum.Consulta => TimeSpan.FromMinutes(10), // Descanso de 10 minutos após consultas
-                _ => TimeSpan.Zero // Caso padrão
-            };
-        }
-
     }
 }
