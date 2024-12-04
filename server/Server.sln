@@ -21,9 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.Aplicacao", "Or
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.WebApi", "OrganizaMed.WebApi\OrganizaMed.WebApi.csproj", "{7DC696A9-AB53-4D3F-9985-DCE100E9ED58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizaMed.Infra.Orm", "OrganizaMed.Infra.Orm\OrganizaMed.Infra.Orm.csproj", "{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - Testes", "6 - Testes", "{AF5A3C82-ACD7-48F0-A362-01401C8A9CAB}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +49,10 @@ Global
 		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7EC255-F884-4766-A444-C00BFC885516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7EC255-F884-4766-A444-C00BFC885516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7EC255-F884-4766-A444-C00BFC885516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7EC255-F884-4766-A444-C00BFC885516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +63,7 @@ Global
 		{63176B08-BAF8-47D8-A851-E46CA73F8D75} = {DE26885A-D049-4BD2-984C-D6447CBC1F8B}
 		{7DC696A9-AB53-4D3F-9985-DCE100E9ED58} = {2DE5014D-01E0-4F19-B36D-3DE022599880}
 		{3C0FE797-E667-46F7-95AC-E76AF0EF50F4} = {861DAA06-C69C-4317-9E3D-BBAD35FB7087}
+		{AB7EC255-F884-4766-A444-C00BFC885516} = {6C576A35-3B74-4FE9-AD41-2879001BA4F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E87A050C-6E47-47FA-820E-F10922310F18}
