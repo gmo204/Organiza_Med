@@ -1,12 +1,11 @@
 import { Routes } from "@angular/router";
 import { ListagemMedicosResolver } from "../medico/services/listagem-medico.resolver";
-import { CadastrarCirurgiaComponent } from "./cadastrar-cirurgia/cadastrar-cirurgia.component";
-import { CadastrarConsultaComponent } from "./cadastrar-consulta/cadastrar-atividade.component";
 import { EditarAtividadeComponent } from "./editar/editar-atividade.component";
 import { ExcluirAtividadeComponent } from "./excluir/excluir-atividade.component";
 import { ListarAtividadesComponent } from "./listar/listar-atividade.component";
-import { listagemAtividadeResolver } from "./services/listagem-atividade.resolver";
-import { visualizarAtividadeResolver } from "./services/visualizar-atividade.resolver";
+import { ListagemAtividadeResolver } from "./services/listagem-atividade.resolver";
+import { VisualizarAtividadeResolver } from "./services/visualizar-atividade.resolver";
+import { CadastrarAtividadeComponent } from "./cadastrar/cadastrar-cirurgia.component";
 
 
 export const AtividadesRoutes: Routes = [
@@ -18,29 +17,24 @@ export const AtividadesRoutes: Routes = [
   {
     path: 'listar',
     component: ListarAtividadesComponent,
-    resolve: { atividade: listagemAtividadeResolver }
+    resolve: { atividades: ListagemAtividadeResolver }
   },
   {
-    path: 'cadastrar-consulta',
-    component: CadastrarConsultaComponent,
-    resolve: { medicos: ListagemMedicosResolver }
-  },
-  {
-    path: 'cadastrar-cirurgia',
-    component: CadastrarCirurgiaComponent,
+    path: 'cadastrar',
+    component: CadastrarAtividadeComponent,
     resolve: { medicos: ListagemMedicosResolver }
   },
   {
     path: 'editar/:id',
     component: EditarAtividadeComponent,
     resolve: {
-      atividade: visualizarAtividadeResolver,
+      atividade: VisualizarAtividadeResolver,
       medicos: ListagemMedicosResolver }
   },
   {
     path: 'excluir/:id',
     component: ExcluirAtividadeComponent,
     resolve: {
-      atividade: visualizarAtividadeResolver}
+      atividade: VisualizarAtividadeResolver}
   }
 ]

@@ -1,9 +1,36 @@
 <main class="container my-4">
   <div class="col col-lg-8 col-xxl-6">
-    <h1 class="fs-2">Cadastro de Consulta</h1>
+    <h1 class="fs-2">Cadastro de Atividade</h1>
     <hr />
 
     <form [formGroup]="atividadeForm" (ngSubmit)="cadastrar()">
+
+       <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Tipo de Atividade</mat-label>
+        <mat-select formControlName="tipo" data-cy="tipo">
+          <mat-option value="0">Consulta</mat-option>
+          <mat-option value="1">Cirurgia</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Forma de Pagamento</mat-label>
+        <mat-select
+          data-cy="formaPagamento"
+          formControlName="formaPagamento"
+          placeholder="Selecione a forma de pagamento"
+        >
+          <mat-option
+            *ngFor="let opcao of tipoAtividade; index as i"
+            [value]="i"
+          >
+            {{ opcao }}
+          </mat-option>
+        </mat-select>
+        <mat-error class="text-white" *ngIf="tipo?.invalid">
+          A forma de pagamento precisa ser selecionada.
+        </mat-error>
+      </mat-form-field> -->
 
       <mat-form-field class="w-100 mt-3" appearance="fill">
         <mat-label>Data</mat-label>
@@ -48,20 +75,15 @@
       </mat-form-field>
 
       <mat-form-field class="w-100 mt-3" appearance="fill">
-        <mat-label>Medico</mat-label>
-        <mat-select formControlName="medicoId">
-          <mat-option
-            *ngFor="let medico of medicos$"
-            [value]="medico.id"
-            >{{ medico.nome }}</mat-option
-          >
+        <mat-label>Médicos</mat-label>
+        <mat-select data-cy="medicoId" formControlName="medicoId" [multiple]="tipo?.value === 1">
+          <mat-option *ngFor="let medico of medicos" [value]="medico.id">
+            {{ medico.nome }}
+          </mat-option>
         </mat-select>
-        <mat-icon matSuffix color="primary">stethoscope</mat-icon>
-        <mat-error *ngIf="medicoId?.invalid"
-          >o Medico é obrigatório</mat-error
-        >
+        <mat-icon matSuffix color="primary">medical_services</mat-icon>
+        <mat-error *ngIf="medicoId?.invalid">Os médicos são obrigatórios</mat-error>
       </mat-form-field>
-
 
       <div class="row justify-content-end g-2 mt-5">
         <button type="submit" mat-flat-button color="primary" class="col-sm-4 col-md-3">

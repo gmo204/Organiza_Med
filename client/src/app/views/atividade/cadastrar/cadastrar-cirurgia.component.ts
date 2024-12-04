@@ -3,8 +3,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { AtividadeService } from '../services/atividade.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
-import { MedicoService } from '../../medico/services/medico.service';
-import { Observable } from 'rxjs';
 import { InserirAtividadeViewModel, TipoAtividadeEnum,  } from '../models/atividade.models';
 import { ListarMedicoViewModel } from '../../medico/models/medico.model';
 import { NgIf } from '@angular/common';
@@ -33,7 +31,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   ],
   templateUrl: './cadastrar-cirurgia.component.html',
 })
-export class CadastrarCirurgiaComponent implements OnInit{
+export class CadastrarAtividadeComponent implements OnInit{
   atividadeForm: FormGroup;
 
   medicos: ListarMedicoViewModel[] = [];
@@ -46,6 +44,7 @@ export class CadastrarCirurgiaComponent implements OnInit{
     private notificacao: NotificacaoService
   ) {
     this.atividadeForm = new FormGroup({
+      tipo: new FormControl<number | null>(0, [Validators.required]),
       data: new FormControl<string | null>(null, [Validators.required]),
       horaInicio: new FormControl<string | null>(null, [Validators.required]),
       horaFim: new FormControl<string | null>(null, [Validators.required]),
@@ -53,6 +52,9 @@ export class CadastrarCirurgiaComponent implements OnInit{
     });
   }
 
+  get tipo(){
+    return this.atividadeForm.get('tipo')
+  }
   get horaInicio(){
     return this.atividadeForm.get('horaInicio');
   }
@@ -93,18 +95,4 @@ export class CadastrarCirurgiaComponent implements OnInit{
       this.router.navigate(['/atividades']);
     });
   }
-
-  // adicionarMedico(idMedico : string){
-  //   const control = new FormControl({
-  //     medicoId: idMedico
-  //   });
-
-  //   this.medicoId.push(control)
-  // }
-
-  // removerMedico(indice : number){
-  //   this.medicoId.removeAt(indice);
-
-  //   this.notificacao.aviso('Medico removido.');
-  // }
 }

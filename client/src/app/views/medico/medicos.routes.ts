@@ -4,7 +4,7 @@ import { CadastrarMedicoComponent } from "./cadastrar/cadastrar-medico.component
 import { EditarMedicoComponent } from "./editar/editar-medico.component";
 import { ExcluirMedicoComponent } from "./excluir/excluir-medico.component";
 import { ListagemMedicosResolver } from "./services/listagem-medico.resolver";
-import { visualizarMedicoResolver } from "./services/visualizar-medico.resolver";
+import { VisualizarMedicoResolver } from "./services/visualizar-medico.resolver";
 
 export const MedicosRoutes : Routes = [
   {
@@ -15,7 +15,7 @@ export const MedicosRoutes : Routes = [
   {
     path: 'listar',
     component: ListagemMedicosComponent,
-    resolve: { medico: ListagemMedicosResolver }
+    resolve: { medicos: ListagemMedicosResolver }
   },
   {
     path: 'cadastrar',
@@ -24,12 +24,12 @@ export const MedicosRoutes : Routes = [
   {
     path: 'editar/:id',
     component: EditarMedicoComponent,
-    resolve: { medico: visualizarMedicoResolver}
+    resolve: { medico: VisualizarMedicoResolver}
 
   },
   {
     path: 'excluir/:id',
     component: ExcluirMedicoComponent,
-    resolve: { medico: visualizarMedicoResolver}
+    resolve: { medico: VisualizarMedicoResolver}
   }
 ]
