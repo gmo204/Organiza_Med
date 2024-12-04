@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { LinkNavegacao } from './models/link-navegacao.models';
 import { UsuarioTokenViewModel } from '../../auth/models/auth.models';
 import { MatMenuModule } from '@angular/material/menu';
@@ -56,12 +56,12 @@ export class ShellComponent {
     },
     {
       titulo: 'Medicos',
-      icone: 'stethoscope',
+      icone: 'medical_services',
       rota: '/medicos',
     },
     {
       titulo: 'Atividades',
-      icone: 'clinical_notes',
+      icone: 'schedule',
       rota: '/atividades',
     },
   ]

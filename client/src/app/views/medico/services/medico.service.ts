@@ -39,8 +39,9 @@ export class MedicoService {
   }
 
   selecionarTodos(): Observable<ListarMedicoViewModel[]> {
-    console.log(this.http.get<ListarMedicoViewModel[]>(this.url))
-    return this.http.get<ListarMedicoViewModel[]>(this.url);
+    const urlCompleto = `${this.url}`;
+
+    return this.http.get<ListarMedicoViewModel[]>(urlCompleto);
   }
 
   selecionarDisponiveis(): Observable<ListarMedicoViewModel[]> {

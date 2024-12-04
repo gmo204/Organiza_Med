@@ -27,14 +27,14 @@ export class DashboardComponent {
       titulo: 'Atividade',
       descricao: 'Gerencie o agendamento das atividades medicas.',
       rota: '/atividades',
-      icone: 'bookmark',
+      icone: 'schedule',
     },
     {
       titulo: 'Medicos',
       descricao:
-        'Gerencie ooos medicos disponiveis para atividades.',
+        'Gerencie os medicos disponiveis para atividades.',
       rota: '/medicos',
-      icone: 'people',
+      icone: 'medical_services',
     },
   ];
 }

@@ -59,6 +59,9 @@ export class EditarMedicoComponent implements OnInit{
       this.notificacao.erro('Não foi possível recuperar o id requisitado!');
       return;
     }
+    const medico = this.route.snapshot.data['medico'];
+
+    this.medicoForm.patchValue(medico);
   }
 
   editar(): void {

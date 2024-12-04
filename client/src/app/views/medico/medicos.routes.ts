@@ -20,7 +20,6 @@ export const MedicosRoutes : Routes = [
   {
     path: 'cadastrar',
     component: CadastrarMedicoComponent,
-    resolve: { medico: visualizarMedicoResolver}
   },
   {
     path: 'editar/:id',
