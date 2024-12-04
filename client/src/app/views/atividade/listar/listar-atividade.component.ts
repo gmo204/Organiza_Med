@@ -22,7 +22,6 @@ import { ListarAtividadeViewModel } from '../models/atividade.models';
     MatIconModule,
     MatTooltipModule,
   ],  templateUrl: './listar-atividade.component.html',
-  styleUrl: './listar-atividade.component.scss'
 })
 export class ListarAtividadesComponent implements OnInit {
   atividades$?: Observable<ListarAtividadeViewModel[]>;
@@ -31,5 +30,10 @@ export class ListarAtividadesComponent implements OnInit {
 
   ngOnInit(): void {
     this.atividades$ = this.atividadeService.selecionarTodos();
+  }
+
+  getDataFormatada(data: Date | string): string {
+    const d = new Date(data);
+    return d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
   }
 }

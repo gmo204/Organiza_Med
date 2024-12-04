@@ -41,6 +41,7 @@ export interface ListarAtividadeViewModel {
   id: string;
   tipo : number;
   horaInicio: Date;
+  horaFim: Date;
 }
 
 export interface VisualizarAtividadeViewModel {

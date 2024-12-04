@@ -26,6 +26,10 @@
           <mat-card-title class="titulo-card">{{ item.tipo == 0 ? "Consulta" : "Cirurgia" }}</mat-card-title>
         </mat-card-header>
 
+        <mat-card-content class="d-grid mt-4">
+          <span><strong>Data:</strong> {{ getDataFormatada(item.horaInicio) }}</span>
+        </mat-card-content>
+
         <mat-card-footer class="d-flex justify-content-end gap-1 p-3 mt-auto">
           <a
             mat-icon-button
