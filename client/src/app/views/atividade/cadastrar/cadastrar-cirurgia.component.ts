@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AtividadeService } from '../services/atividade.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
 import { InserirAtividadeViewModel, TipoAtividadeEnum,  } from '../models/atividade.models';
 import { ListarMedicoViewModel } from '../../medico/models/medico.model';
-import { NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   standalone: true,
   imports: [
     NgIf,
+    NgForOf,
     RouterLink,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -36,6 +37,9 @@ export class CadastrarAtividadeComponent implements OnInit{
 
   medicos: ListarMedicoViewModel[] = [];
 
+  public tipoAtividade = Object.values(TipoAtividadeEnum).filter(
+    (v) => !Number.isFinite(v)
+  );
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -48,7 +52,7 @@ export class CadastrarAtividadeComponent implements OnInit{
       data: new FormControl<string | null>(null, [Validators.required]),
       horaInicio: new FormControl<string | null>(null, [Validators.required]),
       horaFim: new FormControl<string | null>(null, [Validators.required]),
-      medicoId: this.fb.array([]),
+      medicoId: new FormControl<string[]>([])
     });
   }
 
@@ -62,11 +66,11 @@ export class CadastrarAtividadeComponent implements OnInit{
     return this.atividadeForm.get('horaFim');
   }
   get medicoId(){
-    return this.atividadeForm.get('medicoId') as FormArray;
+    return this.atividadeForm.get('medicoId');
   }
 
   ngOnInit(): void {
-    this.medicos = this.route.snapshot.data['medicoId']
+    this.medicos = this.route.snapshot.data['medicos']
   }
 
   cadastrar(): void {
@@ -75,13 +79,13 @@ export class CadastrarAtividadeComponent implements OnInit{
       return;
     }
 
-    const { data, horaInicio, horaFim, medicoId } = this.atividadeForm.value;
+    const { data, horaInicio, horaFim, medicoId, tipo } = this.atividadeForm.value;
 
     const horaInicioCompleta = new Date(`${data}T${horaInicio}`);
     const horaFimCompleta = new Date(`${data}T${horaFim}`);
 
     const novaAtividade: InserirAtividadeViewModel = {
-      tipo: TipoAtividadeEnum.Cirurgia,
+      tipo,
       horaInicio: horaInicioCompleta,
       horaFim: horaFimCompleta,
       medicoId,
@@ -89,7 +93,7 @@ export class CadastrarAtividadeComponent implements OnInit{
 
     this.atividadeService.cadastrar(novaAtividade).subscribe((res) => {
       this.notificacao.sucesso(
-        `A cirurgia foi cadastrada com sucesso!`
+        `A atividade foi cadastrada com sucesso!`
       );
 
       this.router.navigate(['/atividades']);

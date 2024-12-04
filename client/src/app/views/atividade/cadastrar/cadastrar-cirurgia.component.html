@@ -6,19 +6,11 @@
     <form [formGroup]="atividadeForm" (ngSubmit)="cadastrar()">
 
        <mat-form-field class="w-100 mt-3" appearance="fill">
-        <mat-label>Tipo de Atividade</mat-label>
-        <mat-select formControlName="tipo" data-cy="tipo">
-          <mat-option value="0">Consulta</mat-option>
-          <mat-option value="1">Cirurgia</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <!-- <mat-form-field class="w-100 mt-3" appearance="fill">
-        <mat-label>Forma de Pagamento</mat-label>
+        <mat-label>Tipo</mat-label>
         <mat-select
-          data-cy="formaPagamento"
-          formControlName="formaPagamento"
-          placeholder="Selecione a forma de pagamento"
+          data-cy="tipo"
+          formControlName="tipo"
+          placeholder="Selecione o tipo da atividade"
         >
           <mat-option
             *ngFor="let opcao of tipoAtividade; index as i"
@@ -28,11 +20,11 @@
           </mat-option>
         </mat-select>
         <mat-error class="text-white" *ngIf="tipo?.invalid">
-          A forma de pagamento precisa ser selecionada.
+          O tipo de atividade precisa ser selecionado.
         </mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
 
-      <mat-form-field class="w-100 mt-3" appearance="fill">
+       <mat-form-field class="w-100 mt-3" appearance="fill">
         <mat-label>Data</mat-label>
         <input
           matInput
@@ -76,7 +68,7 @@
 
       <mat-form-field class="w-100 mt-3" appearance="fill">
         <mat-label>Médicos</mat-label>
-        <mat-select data-cy="medicoId" formControlName="medicoId" [multiple]="tipo?.value === 1">
+        <mat-select data-cy="medicoId" formControlName="medicoId" multiple>
           <mat-option *ngFor="let medico of medicos" [value]="medico.id">
             {{ medico.nome }}
           </mat-option>
