@@ -21,15 +21,17 @@ namespace OrganizaMed.InfraOrm.ModuloAtividade
             return await registros.Include(x => x.Medicos).ToListAsync();
         }
 
-        public async Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio, DateTime fim, TipoAtividadeEnum tipo)
+        public async Task<IEnumerable<Atividade>> SelecionarPorMedicosEPeriodoAsync(IEnumerable<Guid> medicoIds, DateTime inicio)
         {
-            return await registros
+            
+            // Obter as atividades existentes que possuem médicos em comum e que se sobrepõem ao período desejado
+            var atividadesExistentes = await registros
                 .Include(x => x.Medicos)
                 .Where(a => a.Medicos.Any(m => medicoIds.Contains(m.Id)) &&
-                            (
-                                a.HoraFim > inicio &&
-                                a.HoraInicio < fim))
+                            a.HoraInicio.Day == inicio.Day)
                 .ToListAsync();
+
+            return atividadesExistentes;
         }
     }
 }

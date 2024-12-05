@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OrganizaMed.Dominio.ModuloAtividade
 {
@@ -25,31 +22,51 @@ namespace OrganizaMed.Dominio.ModuloAtividade
                 .GreaterThan(x => x.HoraInicio)
                 .WithMessage("O horário de término deve ser maior que o horário de início.");
 
-            RuleFor(x => x)
-                .MustAsync(async (novaAtividade, cancellation) =>
-                    await VerificarConflitos(novaAtividade))
-                .WithMessage("A atividade entra em conflito com outra atividade ou não respeita o tempo de descanso.");
+            RuleFor(x => x.Medicos)
+                .NotNull()
+                .WithMessage("A lista de médicos é obrigatória.")
+                .Must((atividade, medicos) => ValidarQuantidadeDeMedicos(atividade.Tipo, medicos.Count))
+                .WithMessage("Quantidade de médicos inválida para o tipo de atividade.");
+
+            RuleFor(x => x.HoraInicio)
+                .MustAsync(async (atividade, horaInicio, cancellation) =>
+                    await VerificarConflitoDeHorarios(atividade))
+                .WithMessage("A atividade entra em conflito com outra atividade que possui um médico em comum ou não respeita o tempo de descanso.");
+
         }
 
-        private async Task<bool> VerificarConflitos(Atividade novaAtividade)
+        private bool ValidarQuantidadeDeMedicos(TipoAtividadeEnum tipo, int quantidade)
         {
-            var medicoIds = novaAtividade.Medicos.Select(m => m.Id);
-
-            var atividadesConflitantes = await repositorioAtividade
-                .SelecionarPorMedicosEPeriodoAsync(medicoIds, novaAtividade.HoraInicio, novaAtividade.HoraFim, novaAtividade.Tipo);
-
-            foreach (var atividade in atividadesConflitantes)
+            return tipo switch
             {
-                var tempoDescanso = GetTempoDeDescanso(atividade.Tipo);
+                TipoAtividadeEnum.Consulta => quantidade == 1, 
+                TipoAtividadeEnum.Cirurgia => quantidade >= 1, 
+                _ => false
+            };
+        }
 
-                if (atividade.HoraInicio < novaAtividade.HoraFim &&
-                    atividade.HoraFim.Add(tempoDescanso) > novaAtividade.HoraInicio)
+        private async Task<bool> VerificarConflitoDeHorarios(Atividade novaAtividade)
+        {
+            var medicoIds = novaAtividade.Medicos.Select(m => m.Id).ToList();
+
+            var atividadesExistentes = await repositorioAtividade
+                .SelecionarPorMedicosEPeriodoAsync(medicoIds, novaAtividade.HoraInicio);
+
+
+            foreach (var atividadeExistente in atividadesExistentes)
+            {
+                var tempoDescanso = GetTempoDeDescanso(atividadeExistente.Tipo);
+
+                var horaFimComDescanso = atividadeExistente.HoraFim.Add(tempoDescanso);
+
+                if (atividadeExistente.HoraInicio < novaAtividade.HoraFim &&
+                    horaFimComDescanso > novaAtividade.HoraInicio)
                 {
                     return false;
                 }
             }
 
-            return true; 
+            return true;
         }
 
         private TimeSpan GetTempoDeDescanso(TipoAtividadeEnum tipo)
