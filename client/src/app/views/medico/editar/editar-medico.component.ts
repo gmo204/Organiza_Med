@@ -10,7 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
 import { MedicoService } from '../services/medico.service';
-import { InserirMedicoViewModel } from '../models/medico.model';
+import { InserirMedicoViewModel, MedicoEditadoViewModel } from '../models/medico.model';
+import { PartialObserver } from 'rxjs';
 
 @Component({
   selector: 'app-editar-medico',
@@ -65,19 +66,34 @@ export class EditarMedicoComponent implements OnInit{
   }
 
   editar(): void {
-    if (!this.id) {
-      this.notificacao.erro('Não foi possível recuperar o id requisitado!');
+    if (this.medicoForm.invalid) {
+      this.notificacao.aviso(
+        'Por favor, preencha o formulário corretamente.'
+      );
+
       return;
     }
 
+    const id = this.route.snapshot.params['id'];
+
     const medicoEditado: InserirMedicoViewModel = this.medicoForm.value;
 
-    this.medicoService.editar(this.id, medicoEditado).subscribe((res) => {
-      this.notificacao.sucesso(
-        `O medico [${medicoEditado.nome}] foi editado com sucesso!`
-      );
+    const observer: PartialObserver<MedicoEditadoViewModel> = {
+      next: (medicoInserido) => this.processarSucesso(medicoInserido),
+      error: (erro) => this.processarFalha(erro),
+    };
 
-      this.router.navigate(['/medicos']);
-    });
+    this.medicoService.editar(id, medicoEditado).subscribe(observer)
+  }
+  private processarSucesso(medico: MedicoEditadoViewModel): void {
+    this.notificacao.sucesso(
+     `Medico ${medico.nome} editado com sucesso!`
+    );
+
+    this.router.navigate(['/medicos', 'listar']);
+  }
+
+  private processarFalha(erro: Error): any {
+    this.notificacao.erro(erro.message);
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { AtividadeService } from '../services/atividade.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
-import { InserirAtividadeViewModel, TipoAtividadeEnum,  } from '../models/atividade.models';
+import { AtividadeInseridaViewModel, InserirAtividadeViewModel, TipoAtividadeEnum,  } from '../models/atividade.models';
 import { ListarMedicoViewModel } from '../../medico/models/medico.model';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -80,8 +80,8 @@ export class CadastrarAtividadeComponent implements OnInit{
 
     const { data, horaInicio, horaFim, medicoId, tipo } = this.atividadeForm.value;
 
-    const horaInicioCompleta = new Date(`${data}T${horaInicio}`);
-    const horaFimCompleta = new Date(`${data}T${horaFim}`);
+    const horaInicioCompleta = new Date(`${data}T${horaInicio}Z`);
+    const horaFimCompleta = new Date(`${data}T${horaFim}Z`);
 
     const novaAtividade: InserirAtividadeViewModel = {
       tipo,
@@ -90,12 +90,21 @@ export class CadastrarAtividadeComponent implements OnInit{
       medicoId,
     };
 
-    this.atividadeService.cadastrar(novaAtividade).subscribe((res) => {
-      this.notificacao.sucesso(
-        `A atividade foi cadastrada com sucesso!`
-      );
-
-      this.router.navigate(['/atividades']);
+    this.atividadeService.cadastrar(novaAtividade).subscribe({
+      next: (contatoInserido) => this.processarSucesso(contatoInserido),
+      error: (erro) => this.processarFalha(erro),
     });
+  }
+
+  private processarSucesso(atividade: AtividadeInseridaViewModel): void {
+    this.notificacao.sucesso(
+     `Atividade cadastrada com sucesso!`
+    );
+
+    this.router.navigate(['/atividades', 'listar']);
+  }
+
+  private processarFalha(erro: Error): any {
+    this.notificacao.erro(erro.message);
   }
 }

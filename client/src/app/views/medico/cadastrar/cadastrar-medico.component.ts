@@ -71,7 +71,7 @@ export class CadastrarMedicoComponent {
      `Medico "${medico.nome}" cadastrado com sucesso!`
     );
 
-    this.router.navigate(['/contatos', 'listar']);
+    this.router.navigate(['/medicos', 'listar']);
   }
 
   private processarFalha(erro: Error): any {

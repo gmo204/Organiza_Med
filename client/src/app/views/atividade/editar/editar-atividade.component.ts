@@ -12,7 +12,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
 import { ListarMedicoViewModel } from '../../medico/models/medico.model';
 import { AtividadeService } from '../services/atividade.service';
-import { EditarAtividadeViewModel, TipoAtividadeEnum } from '../models/atividade.models';
+import { AtividadeEditadaViewModel, AtividadeInseridaViewModel, EditarAtividadeViewModel, TipoAtividadeEnum } from '../models/atividade.models';
+import { PartialObserver } from 'rxjs';
 
 @Component({
   selector: 'app-editar-atividade',
@@ -76,7 +77,7 @@ export class EditarAtividadeComponent {
 
       const { horaInicio, horaFim, ...resto } = atividade;
 
-      const data = new Date(horaInicio).toISOString().split('T')[0]; 
+      const data = new Date(horaInicio).toISOString().split('T')[0];
       const horaInicioStr = new Date(horaInicio).toLocaleTimeString('en-US', {
         hour12: false,
         hour: '2-digit',
@@ -109,8 +110,8 @@ export class EditarAtividadeComponent {
 
     const { data, horaInicio, horaFim, medicoId, tipo } = this.atividadeForm.value;
 
-    const horaInicioCompleta = new Date(`${data}T${horaInicio}`);
-    const horaFimCompleta = new Date(`${data}T${horaFim}`);
+    const horaInicioCompleta = new Date(`${data}T${horaInicio}Z`);
+    const horaFimCompleta = new Date(`${data}T${horaFim}Z`);
 
     const atividadeEditada:EditarAtividadeViewModel = {
       tipo,
@@ -119,12 +120,22 @@ export class EditarAtividadeComponent {
       medicoId,
     };
 
-    this.atividadeService.editar(id, atividadeEditada).subscribe((res) => {
-      this.notificacao.sucesso(
-         `O atividade foi editada com sucesso!`
-      );
+    const observer: PartialObserver<AtividadeEditadaViewModel> = {
+      next: (atividadeInserida) => this.processarSucesso(atividadeInserida),
+      error: (erro) => this.processarFalha(erro),
+    };
 
-      this.router.navigate(['/atividades']);
-    })
+    this.atividadeService.editar(id, atividadeEditada).subscribe(observer)
+  }
+  private processarSucesso(atividade: AtividadeEditadaViewModel): void {
+    this.notificacao.sucesso(
+     `Atividade editada com sucesso!`
+    );
+
+    this.router.navigate(['/atividades', 'listar']);
+  }
+
+  private processarFalha(erro: Error): any {
+    this.notificacao.erro(erro.message);
   }
 }
