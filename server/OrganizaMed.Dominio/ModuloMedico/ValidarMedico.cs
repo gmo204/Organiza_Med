@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using OrganizaMed.Dominio.ModuloMedico;
+
 
 namespace OrganizaMed.Dominio.ModuloMedico
 {
@@ -8,6 +10,8 @@ namespace OrganizaMed.Dominio.ModuloMedico
 
         public ValidarMedico(IRepositorioMedico repositorioMedico)
         {
+            this.repositorioMedico = repositorioMedico;
+
             RuleFor(x => x.Nome)
                 .NotEmpty()
                 .WithMessage("O nome é obrigatório")
@@ -24,6 +28,8 @@ namespace OrganizaMed.Dominio.ModuloMedico
 
         private async Task<bool> NomeUnico(string nome, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrWhiteSpace(nome)) return false;
+
             return !await repositorioMedico.ExisteNomeAsync(nome, cancellationToken);
         }
     }

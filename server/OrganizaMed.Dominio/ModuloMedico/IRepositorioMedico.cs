@@ -6,6 +6,6 @@ namespace OrganizaMed.Dominio.ModuloMedico
     {
         Task<List<Medico>> Filtrar(Func<Medico, bool> predicate);
         public List<Medico> SelecionarMuitos(List<Guid> idsMedicosSelecionados);
-        public Task<bool> ExisteNomeAsync(string nome, CancellationToken cancellationToken)
+        public Task<bool> ExisteNomeAsync(string nome, CancellationToken cancellationToken);
     }
 }

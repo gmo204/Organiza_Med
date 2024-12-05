@@ -13,7 +13,7 @@ namespace OrganizaMed.Aplicacao.Medico
 
         public async Task<Result<Dominio.ModuloMedico.Medico>> InserirAsync(Dominio.ModuloMedico.Medico medico)
         {
-            var validador = new ValidarMedico();
+            var validador = new ValidarMedico(repositorioMedico);
 
             var resultadoValidacao = await validador.ValidateAsync(medico);
 
@@ -33,7 +33,7 @@ namespace OrganizaMed.Aplicacao.Medico
 
         public async Task<Result<Dominio.ModuloMedico.Medico>> EditarAsync(Dominio.ModuloMedico.Medico medico)
         {
-            var validador = new ValidarMedico();
+            var validador = new ValidarMedico(repositorioMedico);
 
             var resultadoValidacao = await validador.ValidateAsync(medico);
 

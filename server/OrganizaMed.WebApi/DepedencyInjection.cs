@@ -1,4 +1,5 @@
 ﻿using eAgenda.WebApi.Config.AutomapperConfig;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NoteKeeper.Dominio.Compartilhado;
@@ -34,6 +35,8 @@ namespace OrganizaMed.WebApi
         public static void ConfigureCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IRepositorioMedico, RepositorioMedicoOrm>();
+            services.AddScoped<IValidator<Medico>, ValidarMedico>();
+
             services.AddScoped<ServicoMedico>();
             
             services.AddScoped<IRepositorioAtividade, RepositorioAtividadeOrm>();
