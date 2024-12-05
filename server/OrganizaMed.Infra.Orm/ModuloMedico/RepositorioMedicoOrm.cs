@@ -32,5 +32,11 @@ namespace OrganizaMed.InfraOrm.ModuloMedico
 
             return medicos.Where(predicate).ToList();
         }
+
+        public async Task<bool> ExisteNomeAsync(string nome, CancellationToken cancellationToken)
+        {
+            return await registros.AnyAsync(m => m.Nome == nome, cancellationToken);
+        }
+
     }
 }
