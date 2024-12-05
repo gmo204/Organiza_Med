@@ -15,7 +15,7 @@
           [maxlength]="30"
         />
         <mat-icon matSuffix color="primary">person</mat-icon>
-        <mat-error class="text-white" *ngIf="nome?.invalid">
+        <mat-error class="text" *ngIf="nome?.invalid">
           <span *ngIf="nome?.errors?.['required']"
             >O nome precisa ser preenchido.</span
           >
@@ -38,15 +38,15 @@
           [maxlength]="30"
         />
         <mat-icon matSuffix color="primary">none</mat-icon>
-        <mat-error class="text-white" *ngIf="crm?.invalid">
+        <mat-error class="text" *ngIf="crm?.invalid">
           <span *ngIf="crm?.errors?.['required']"
             >O crm precisa ser preenchido.</span
           >
           <span *ngIf="crm?.errors?.['minlength']"
-            >O crm deve conter 8 caracteres.</span
+            >O CRM deve seguir o padrão 00000-UF</span
           >
           <span *ngIf="crm?.errors?.['maxlength']"
-            >O crm deve conter 8 caracteres.</span
+            >O CRM deve seguir o padrão 00000-UF</span
           >
         </mat-error>
       </mat-form-field>

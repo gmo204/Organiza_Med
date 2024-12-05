@@ -19,7 +19,7 @@
             {{ opcao }}
           </mat-option>
         </mat-select>
-        <mat-error class="text-white" *ngIf="tipo?.invalid">
+        <mat-error class="text" *ngIf="tipo?.invalid">
           O tipo de atividade precisa ser selecionado.
         </mat-error>
       </mat-form-field>
@@ -34,6 +34,9 @@
           aria-label="Data do Compromisso"
         />
         <mat-icon matSuffix color="primary">calendar_today</mat-icon>
+        <mat-error class="text" *ngIf="horaInicio?.invalid">
+          A data precisa ser preenchida.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="w-100 mt-3" appearance="fill">
@@ -46,7 +49,7 @@
           placeholder="18:00"
         />
         <mat-icon matSuffix color="primary">schedule</mat-icon>
-        <mat-error class="text-white" *ngIf="horaInicio?.invalid">
+        <mat-error class="text" *ngIf="horaInicio?.invalid">
           A hora de início precisa ser preenchida.
         </mat-error>
       </mat-form-field>
@@ -61,7 +64,7 @@
           placeholder="21:00"
         />
         <mat-icon matSuffix color="primary">schedule</mat-icon>
-        <mat-error class="text-white" *ngIf="horaFim?.invalid">
+        <mat-error class="text" *ngIf="horaFim?.invalid">
           A hora de término precisa ser preenchida.
         </mat-error>
       </mat-form-field>
