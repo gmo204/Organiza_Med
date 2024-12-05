@@ -6,12 +6,13 @@ namespace OrganizaMed.Dominio.Tests
         [TestMethod]
         public void Deve_Inserir_Medico()
         {
-            var medico = new Medico
+            var medico = new Medico("","")
         }
 
         [TestMethod]
         public void Nao_Deve_Inserir_Medico_Existente()
         {
+            var medico = new Medico("Pedro", "12345-SC");
 
         }
 
