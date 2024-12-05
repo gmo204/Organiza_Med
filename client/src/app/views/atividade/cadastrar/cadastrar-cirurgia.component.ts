@@ -41,7 +41,6 @@ export class CadastrarAtividadeComponent implements OnInit{
     (v) => !Number.isFinite(v)
   );
   constructor(
-    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private atividadeService:AtividadeService,

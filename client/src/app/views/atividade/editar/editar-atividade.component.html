@@ -5,59 +5,76 @@
 
     <form [formGroup]="atividadeForm" (ngSubmit)="editar()">
 
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Tipo da Atividade</mat-label>
-        <mat-select data-cy="tipo" formControlName="tipo">
+       <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Tipo</mat-label>
+        <mat-select
+          data-cy="tipo"
+          formControlName="tipo"
+          placeholder="Selecione o tipo da atividade"
+        >
           <mat-option
-              *ngFor="let tipo of tipoAtividades; index as i"
-              [value]="i"
-            >
-              {{ tipo }}
-            </mat-option>
+            *ngFor="let opcao of tipoAtividades; index as i"
+            [value]="i"
+          >
+            {{ opcao }}
+          </mat-option>
         </mat-select>
         <mat-error class="text-white" *ngIf="tipo?.invalid">
-          O tipo da atividade precisa ser selecionado.
+          O tipo de atividade precisa ser selecionado.
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Horário de Início</mat-label>
+       <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Data</mat-label>
         <input
-        matInput
-        data-cy="horaInicio"
-        formControlName="horaInicio"
-        type="datetime-local"
-        placeholder="Ex: 18:00"
+          matInput
+          data-cy="data"
+          formControlName="data"
+          type="date"
+          aria-label="Data do Compromisso"
         />
+        <mat-icon matSuffix color="primary">calendar_today</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Hora de Início</mat-label>
+        <input
+          matInput
+          data-cy="horaInicio"
+          formControlName="horaInicio"
+          type="time"
+          placeholder="18:00"
+        />
+        <mat-icon matSuffix color="primary">schedule</mat-icon>
         <mat-error class="text-white" *ngIf="horaInicio?.invalid">
-          O horário de início é obrigatório
+          A hora de início precisa ser preenchida.
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Horário de Término</mat-label>
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Hora de Término</mat-label>
         <input
-        matInput
-        data-cy="horaFim"
-        type="datetime-local"
-        formControlName="horaFim"
-        placeholder="Ex: 18:00"
+          matInput
+          data-cy="horaFim"
+          formControlName="horaFim"
+          type="time"
+          placeholder="21:00"
         />
+        <mat-icon matSuffix color="primary">schedule</mat-icon>
         <mat-error class="text-white" *ngIf="horaFim?.invalid">
-          O horário de término é obrigatório
+          A hora de término precisa ser preenchida.
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Selecione os Médicos</mat-label>
+      <mat-form-field class="w-100 mt-3" appearance="fill">
+        <mat-label>Médicos</mat-label>
         <mat-select data-cy="medicoId" formControlName="medicoId" multiple>
-          <mat-option *ngFor="let medico of medicoId" [value]="medico.id">
+          <mat-option *ngFor="let medico of medicos" [value]="medico.id">
             {{ medico.nome }}
           </mat-option>
         </mat-select>
-        <mat-error class="text-white" *ngIf="medicoId?.invalid">
-          Ao menos um medico precisa ser selecionado.
-        </mat-error>
+        <mat-icon matSuffix color="primary">medical_services</mat-icon>
+        <mat-error *ngIf="medicoId?.invalid">Os médicos são obrigatórios</mat-error>
       </mat-form-field>
 
       <div class="row justify-content-end g-2 mt-5">

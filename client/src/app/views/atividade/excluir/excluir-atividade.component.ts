@@ -1,22 +1,31 @@
-import { NgIf, AsyncPipe } from '@angular/common';
+import { NgIf, AsyncPipe, NgForOf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
 import { VisualizarAtividadeViewModel } from '../models/atividade.models';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
 import { AtividadeService } from '../services/atividade.service';
+import { Observable } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-excluir-atividade',
   standalone: true,
-  imports: [NgIf, RouterLink, AsyncPipe, MatButtonModule, MatIconModule],
-  templateUrl: './excluir-atividade.component.html',
+  imports: [
+    NgIf,
+    NgForOf,
+    AsyncPipe,
+    RouterLink,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+  ],  templateUrl: './excluir-atividade.component.html',
 })
 export class ExcluirAtividadeComponent implements OnInit {
-  id?: string;
-  atividade$?: Observable<VisualizarAtividadeViewModel>;
+  detalhesAtividade?: VisualizarAtividadeViewModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,25 +35,35 @@ export class ExcluirAtividadeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id'];
-
-    if (!this.id) {
-      this.notificacao.erro('Não foi possível recuperar o id requisitado!');
-      return;
-    }
+    this.detalhesAtividade = this.route.snapshot.data['atividade']
+    console.log(this.detalhesAtividade)
   }
-  excluir() {
-    if (!this.id) {
-      this.notificacao.erro('Não foi possível recuperar o id requisitado!');
-      return;
-    }
 
-    this.atividadeService.excluir(this.id).subscribe((res) => {
-      this.notificacao.sucesso(
-        `O registro ID [${this.id}] foi excluído com sucesso!`
-      );
+  public excluir() {
+    if (this.detalhesAtividade?.id == null)
+      return this.notificacao.erro("Id da atividade não foi encontrado")
 
-      this.router.navigate(['/atividades']);
+    console.log(this.detalhesAtividade?.id)
+    this.atividadeService.excluir(this.detalhesAtividade?.id).subscribe({
+      next: () => this.processarSucesso(),
+      error: (erro) => this.processarFalha(erro),
     });
+  }
+
+  private processarSucesso(): void {
+    this.notificacao.sucesso('Atividade excluída com sucesso!');
+
+    this.router.navigate(['/atividades', 'listar']);
+  }
+
+  private processarFalha(erro: Error) {
+    this.notificacao.erro(erro.message);
+  }
+
+  getDataFormatada(data: Date | void): string {
+    if (data == null)
+      return "Erro ao mepear data"
+    const d = new Date(data);
+    return d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
   }
 }
