@@ -42,6 +42,8 @@ export interface ListarAtividadeViewModel {
   tipo : number;
   horaInicio: Date;
   horaFim: Date;
+
+  medico: ListarMedicoViewModel[];
 }
 
 export interface VisualizarAtividadeViewModel {

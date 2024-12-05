@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
 import { MedicoService } from '../services/medico.service';
-import { InserirMedicoViewModel } from '../models/medico.model';
+import { InserirMedicoViewModel, MedicoInseridoViewModel } from '../models/medico.model';
 import { NotificacaoService } from '../../../core/notificacao/notificacao.service';
 
 @Component({
@@ -51,14 +51,30 @@ export class CadastrarMedicoComponent {
   }
 
   cadastrar(): void {
-    const novoMedico: InserirMedicoViewModel = this.medicoForm.value;
-
-    this.medicoService.cadastrar(novoMedico).subscribe((res) => {
-      this.notificacao.sucesso(
-        `O medico [${res.nome}] foi cadastrado com sucesso!`
+    if (this.medicoForm.invalid) {
+      this.notificacao.aviso(
+        'Por favor, preencha o formulário corretamente!'
       );
 
-      this.router.navigate(['/medicos']);
+      return;
+    }
+    const novoMedico: InserirMedicoViewModel = this.medicoForm.value;
+
+    this.medicoService.cadastrar(novoMedico).subscribe({
+      next: (contatoInserido) => this.processarSucesso(contatoInserido),
+      error: (erro) => this.processarFalha(erro),
     });
+  }
+
+  private processarSucesso(medico: MedicoInseridoViewModel): void {
+    this.notificacao.sucesso(
+     `Medico "${medico.nome}" cadastrado com sucesso!`
+    );
+
+    this.router.navigate(['/contatos', 'listar']);
+  }
+
+  private processarFalha(erro: Error): any {
+    this.notificacao.erro(erro.message);
   }
 }

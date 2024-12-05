@@ -17,7 +17,10 @@ export const AtividadesRoutes: Routes = [
   {
     path: 'listar',
     component: ListarAtividadesComponent,
-    resolve: { atividades: ListagemAtividadeResolver }
+    resolve: {
+      atividades: ListagemAtividadeResolver,
+      medicos: ListagemMedicosResolver
+    }
   },
   {
     path: 'cadastrar',

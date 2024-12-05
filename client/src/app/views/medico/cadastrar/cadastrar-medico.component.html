@@ -15,7 +15,7 @@
           placeholder="Ex: Joao Silva"
           [maxlength]="30"
         />
-        <mat-icon matSuffix color="primary">Nome</mat-icon>
+        <mat-icon matSuffix color="primary">person</mat-icon>
         <mat-error class="text-white" *ngIf="nome?.invalid">
           <span *ngIf="nome?.errors?.['required']"
             >O nome precisa ser preenchido.</span
@@ -39,7 +39,7 @@
           placeholder="Ex: 12345-SC"
           [maxlength]="30"
         />
-        <mat-icon matSuffix color="primary">CRM</mat-icon>
+        <mat-icon matSuffix color="primary">none</mat-icon>
         <mat-error class="text-white" *ngIf="crm?.invalid">
           <span *ngIf="crm?.errors?.['required']"
             >O crm precisa ser preenchido.</span
