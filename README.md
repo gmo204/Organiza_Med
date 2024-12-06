@@ -18,7 +18,7 @@ Sistema de Cadastro de Atividades e Medicos desenvolvido utilizando ASP.NET WebA
 	- nome
 	- CRM
 
-2. O cadastro do **Nota** consiste de:
+2. O cadastro do **Atividade** consiste de:
 	- tipo de atividade
 	- data 
     - hora de inicio e termino
