@@ -12,6 +12,7 @@ import { NotificacaoService } from '../../../core/notificacao/notificacao.servic
 import { MedicoService } from '../services/medico.service';
 import { InserirMedicoViewModel, MedicoEditadoViewModel } from '../models/medico.model';
 import { PartialObserver } from 'rxjs';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Component({
   selector: 'app-editar-medico',
@@ -93,7 +94,7 @@ export class EditarMedicoComponent implements OnInit{
     this.router.navigate(['/medicos', 'listar']);
   }
 
-  private processarFalha(erro: Error): any {
-    this.notificacao.erro(erro.message);
+  private processarFalha(erro: any): any {
+    this.notificacao.erro(erro.error[0]);
   }
 }

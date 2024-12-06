@@ -104,7 +104,7 @@ export class CadastrarAtividadeComponent implements OnInit{
     this.router.navigate(['/atividades', 'listar']);
   }
 
-  private processarFalha(erro: Error): any {
-    this.notificacao.erro(erro.message);
+  private processarFalha(erro: any): any {
+    this.notificacao.erro(erro.error[0]);
   }
 }
